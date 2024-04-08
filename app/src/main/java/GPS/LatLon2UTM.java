@@ -26,10 +26,12 @@ public class LatLon2UTM {
         S =A0 * lat - B0 * SIN(2*lat) + C0 * SIN(4*lat) - D0 * SIN(6*lat) + E0 * SIN(8*lat);
         K1 = S * k0;
         K2 = nu * SIN(lat) * COS(lat) * POW(sin1,2) * k0 * (100000000) / 2;
-        K3 = ((POW(sin1, 4)*nu*SIN(lat)*Math.pow(COS(lat), 3)) / 24) * (5-POW(TAN(lat), 2) + 9*e1sq*POW(COS(lat), 2) + 4 * POW(e1sq, 2) * POW(COS(lat), 4)) * k0 * (10000000000000000L);
-        k4 = nu * COS(lat) * sin1 * k0 * 10000;
-        k5 = POW(sin1*COS(lat),3) * (nu/6) * (1-POW(TAN(lat),2) + e1sq * POW(COS(lat), 2)) * k0 * 1000000000000L;
-        A6 = (POW(p*sin1,6) * nu * SIN(lat) * POW(COS(lat),5) / 720) * (61 - 58 * POW(TAN(lat),2) + POW(TAN(lat),4) + 270 * e1sq * POW(COS(lat),2) - 330 * e1sq * POW(SIN(lat),2)) * k0 * (1E+24);
+        K3 = ((POW(sin1, 4)*nu*SIN(lat)*Math.pow(COS(lat), 3)) / 24) * (5-POW(TAN(lat), 2) +
+                9*e1sq*POW(COS(lat), 2) + 4 * POW(e1sq, 2) * POW(COS(lat), 4)) * k0 * (10000000000000000L);
+        K4 = nu * COS(lat) * sin1 * k0 * 10000;
+        K5 = POW(sin1*COS(lat),3) * (nu/6) * (1-POW(TAN(lat),2) + e1sq * POW(COS(lat), 2)) * k0 * 1000000000000L;
+        A6 = (POW(p*sin1,6) * nu * SIN(lat) * POW(COS(lat),5) / 720) * (61 - 58 * POW(TAN(lat),2) +
+                POW(TAN(lat),4) + 270 * e1sq * POW(COS(lat),2) - 330 * e1sq * POW(SIN(lat),2)) * k0 * (1E+24);
 
 
     }

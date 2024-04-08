@@ -28,7 +28,7 @@ import com.example.arproject.R;
 
 import java.util.Collections;
 
-public class Camera2Activity extends AppCompatActivity implements SurfaceHolder.Callback, Camera2 {
+public class Camera2Activity extends AppCompatActivity implements SurfaceHolder.Callback {
 
     private static final int REQUEST_CAMERA_PERMISSION = 200;
     private SurfaceHolder surfaceHolder;

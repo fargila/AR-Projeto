@@ -1,11 +1,14 @@
 package GPS;
 
+import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Vibrator;
 
-import com.example.arproject.PointOI;
+import main.PointOI;
 import com.example.arproject.R;
-import com.example.arproject.Route;
+
+import main.ProjectAR;
+import main.Route;
 
 import java.util.ArrayList;
 
@@ -25,11 +28,11 @@ public class gpsProximity {
 //    private MediaPlayer soundClip;
 
     public void GPSProximity(){
-        v = (Vibrator) ProjetoAR.getInstance().
-                getSystemService(ProjetoAR.getInstace().
+        v = (Vibrator) ProjectAR.getInstance().
+                getSystemService(ProjectAR.getInstace().
                         getApplicationContext().VIBRATOR_SERVICE);
 
-        soundClip = MediaPlayer.create(ProjetoAR.getInstace().
+        soundClip = MediaPlayer.create(ProjectAR.getInstace().
                 getApplicationContext(), R.raw.notification_sound);
 
         pointsVisited = new ArrayList<PointOI>();

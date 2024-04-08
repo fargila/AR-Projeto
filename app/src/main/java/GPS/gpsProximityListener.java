@@ -2,8 +2,9 @@ package GPS;
 
 import android.location.Location;
 
-import com.example.arproject.PointOI;
-import com.example.arproject.Route;
+import main.PointOI;
+import main.ProjectAR;
+import main.Route;
 
 public class gpsProximityListener extends gpsProximity{
 
@@ -18,7 +19,7 @@ public class gpsProximityListener extends gpsProximity{
         distance = Float.MAX_VALUE;
 
         if(MapState.getInstance().getGPS().isDialogDisplayed()){
-            PointInfoState state = (PointInfoState) ProjetoAR.getInstance().getCurrentState();
+            PointInfoState state = (PointInfoState) ProjectAR.getInstance().getCurrentState();
             Location.distanceBetween(latitude, longitude, state.getPointOI.coords[0], state.getPointOI().coords[1], results);
 
             float offset = Math.abs(lastFix - results[0]){
@@ -31,14 +32,14 @@ public class gpsProximityListener extends gpsProximity{
                     hasBeenVisited = false;
                 if(results[0] > proximityAlertDistance + proximityAlertError && hasBeenVisited)
                 {
-                    ProjetoAR.getInstance().changeState(MapState.STATE_ID);
+                    ProjectAR.getInstance().changeState(MapState.STATE_ID);
                     MapState.getInstance().loadData(currentRoute, currentPoint);
                     MapState.getInstance().getGPS().setDialogDisplayed(false);
                 }
                 else if(!MapState.getInstance().getGPS().isDialogDisplayed() &&
-                        PRojetoAR.getInstance().getCurrentState().getState().getId() == MapState.STATE_ID)
+                        ProjectAR.getInstance().getCurrentState().getState().getId() == MapState.STATE_ID)
                 {
-                    for(Route r : ProjetoAR.getInstance().routes){
+                    for(Route r : ProjectAR.getInstance().routes){
                         for(PointOI p : r.pointsOI)
                         {
                             Location.distanceBetween(latitude, longitude, p.coords[0], p.coords[1], results);
@@ -58,8 +59,8 @@ public class gpsProximityListener extends gpsProximity{
                             !MapState.getInstance().getGPS().isDialogDisplayed())
                     {
                         super.mediaNotification();
-                        ProjetoAR.getInstance().changeState(PointInfoState.STATE_ID);
-                        ProjetoAR.getInstance().getCurrentState().loadData(currentRoute, currentPoint);
+                        ProjectAR.getInstance().changeState(PointInfoState.STATE_ID);
+                        ProjectAR.getInstance().getCurrentState().loadData(currentRoute, currentPoint);
                         MapState.getInstance().getGPS().setDialogDisplayed(true);
                         lastFix = results[0];
                     }
