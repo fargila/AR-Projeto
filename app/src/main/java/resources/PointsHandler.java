@@ -11,6 +11,34 @@ import main.PointOI;
 
 public class PointsHandler extends DefaultHandler {
 
+    /*Essa classe é um manipulador SAX (Simple API for XML) para processar arquivos XML que contêm
+     informações sobre os pontos de interesse (POIs). O SAX é uma API de processamento de XML que
+     permite analisar os documentos XML de forma sequencial.
+
+    -> startDocument(): É chamado quando o parser SAX inicia o processamento do documento
+    XML. Ele inicializa as variáveis de controle e cria uma lista para armazenar os POIs.
+
+    -> startElement(String uri, String localName, String qName, Attributes attributes): Método para quando
+    o parser SAX encontra uma tag de abertura de elemento no XML. Ele inicializa algumas
+    variáveis de controle com base no nome do elemento. Por exemplo, se encontrar a tag <point>,
+    cria um novo objeto PointOI para representar o ponto de interesse atual e atribui seu ID com base
+    nas informações da tag.
+
+    -> characters(char[] ch, int start, int length): Este método é chamado quando o parser SAX encontra
+    texto dentro de um elemento XML. Ele captura o texto e o armazena em um buffer, que será utilizado
+    posteriormente para preencher os atributos do ponto de interesse atual.
+
+    -> endElement(String uri, String localName, String qName): Este método é chamado quando o parser
+    SAX encontra uma tag de fechamento de elemento no XML. Ele finaliza o processamento do elemento
+    atual e atualiza as variáveis de controle conforme necessário. Por exemplo, se encontrar a tag de
+    fechamento </point>, adiciona o ponto de interesse atual à lista de pontos.
+
+    -> getParsedData(): Este método retorna a lista de pontos de interesse após o processamento do documento XML.
+    Este manipulador SAX é projetado especificamente para lidar com um formato de XML específico,
+    onde cada ponto de interesse é representado por uma série de elementos aninhados, como title,
+    pointdescription, images, video, etc. Ele lê esses elementos do XML e os transforma em objetos
+    PointOI, que são posteriormente armazenados em uma lista para uso posterior no aplicativo.*/
+
     private boolean in_titletag;
     private boolean in_icontag;
     private boolean in_pointdescriptiontag;
@@ -103,7 +131,7 @@ public class PointsHandler extends DefaultHandler {
         else if(in_videotag)
         {
             buffer.append(ch, start, length);
-            currentPoint.video = buffer.toString();
+            //currentPoint.video = buffer.toString();
         }
         else if (in_artag)
         {

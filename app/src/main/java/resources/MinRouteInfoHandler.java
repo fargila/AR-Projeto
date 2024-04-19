@@ -7,6 +7,33 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.util.ArrayList;
 
 public class MinRouteInfoHandler extends DefaultHandler {
+
+    /*Classe para manipular um SAX, mas é usado para processar um tipo diferente de XML,
+    que contém informações resumidas sobre rotas mínimas.
+
+    ->startDocument(): Este método é chamado quando o parser SAX inicia o processamento do documento
+    XML. Ele inicializa as variáveis de controle e cria uma lista para armazenar as informações sobre as rotas mínimas.
+
+    ->startElement(String uri, String localName, String qName, Attributes attributes): quando
+    o parser SAX encontrar uma tag de abertura de elemento no XML. Ele inicializa algumas
+    variáveis de controle com base no nome do elemento encontrado. Por exemplo, se encontrar a tag <route>,
+    cria um novo objeto MinRouteInfo para representar a rota atual e atribui seu ID e versão com base nos atributos da tag.
+
+    ->characters(char[] ch, int start, int length): Este método é chamado quando o parser SAX encontra
+    texto dentro de um elemento XML. Ele captura o texto e o armazena em um buffer, que será utilizado
+    posteriormente para preencher os atributos da rota mínima.
+
+    ->endElement(String uri, String localName, String qName): Este método é chamado quando o parser SAX
+    encontra uma tag de fechamento de elemento no XML. Ele finaliza o processamento do elemento atual e
+    atualiza as variáveis de controle conforme necessário. Por exemplo, se encontrar a tag de fechamento
+    </route>, adiciona a rota mínima atual à lista de rotas.
+
+    ->getParsedData(): Este método retorna a lista de rotas mínimas após o processamento do documento XML.
+    Assim como o manipulador anterior, este manipulador SAX é projetado especificamente para lidar com um
+    formato de XML específico, onde cada rota mínima é representada por uma série de elementos aninhados,
+    como name, url, arfiles, etc. Ele lê esses elementos do XML e os transforma em objetos MinRouteInfo,
+    que são posteriormente armazenados em uma lista para uso posterior no aplicativo.*/
+
     private boolean in_nametag;
     private boolean in_urltag;
     private boolean in_arfilestag;
