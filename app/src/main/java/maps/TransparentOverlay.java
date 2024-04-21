@@ -16,7 +16,7 @@ import main.Route;
 import threads.RouteThread;
 
 
-public class RouteOverlay extends Overlay {
+public class TransparentOverlay extends Overlay {
 
     private Route route = null;
     private ArrayList<ArrayList<GeoPoint>> rutasVerde;
