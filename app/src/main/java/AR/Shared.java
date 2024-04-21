@@ -4,28 +4,39 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 
-public class Shared {
+import AR.core.Renderer;
+import AR.core.TextureManager;
 
+public class Shared {
     @SuppressLint("StaticFieldLeak")
-    private static Context context;
-    private static GLSurfaceView.Renderer renderer;
-    private static TextureManager textureManager;
-    private static Context getContext() {
-        return context;
+    private static Context _context;
+    private static Renderer _renderer;
+    private static TextureManager _textureManager;
+
+    public static Context context() {
+        return _context;
     }
-    private static void setContext(Context c){
-        context = c;
+
+    public static void context(Context $c) {
+        _context = $c;
     }
-    public static GLSurfaceView.Renderer getRenderer() {
-        return  renderer;
+
+    public static Renderer renderer() {
+        return _renderer;
     }
-    public static void setRenderer(GLSurfaceView.Renderer r){
-        renderer = r;
+
+    public static void renderer(Renderer $r) {
+        _renderer = $r;
     }
-    public static TextureManager getTextureManager(){
-        return  textureManager;
+
+    /**
+     * You must access the TextureManager instance through this accessor
+     */
+    public static TextureManager textureManager() {
+        return _textureManager;
     }
-    public static void setTextureManager(TextureManager tm){
-        textureManager = tm;
+
+    public static void textureManager(TextureManager $bm) {
+        _textureManager = $bm;
     }
 }

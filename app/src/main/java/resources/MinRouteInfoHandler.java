@@ -6,6 +6,8 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.ArrayList;
 
+import main.MinRouteInfo;
+
 public class MinRouteInfoHandler extends DefaultHandler {
 
     /*Classe para manipular um SAX, mas é usado para processar um tipo diferente de XML,
@@ -83,7 +85,7 @@ public class MinRouteInfoHandler extends DefaultHandler {
         {
             in_arfilestag = false;
             if(!arfiles.equals(""))
-                currentRoute.urlArfiles = this.arfiles.split(",");
+                currentRoute.urlArFiles = this.arfiles.split(",");
             else
                 currentRoute.urlArFiles = null;
         }

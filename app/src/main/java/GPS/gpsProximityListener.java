@@ -5,6 +5,8 @@ import android.location.Location;
 import main.PointOI;
 import main.ProjectAR;
 import main.Route;
+import states.MapState;
+import states.PointInfoState;
 
 public class gpsProximityListener extends gpsProximity{
 

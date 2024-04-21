@@ -14,6 +14,9 @@ import android.widget.Gallery;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import gallery.BigImageAdapter;
+import gallery.FullScreenGallery;
+import gallery.ImageAdapter;
 import main.*;
 import resources.ResourceManager;
 import threads.ImageDownloadingThread;

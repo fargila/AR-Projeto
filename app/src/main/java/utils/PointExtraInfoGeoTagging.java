@@ -26,7 +26,7 @@ public class PointExtraInfoGeoTagging extends LinearLayout {
         pointName = new EditText(context);
         pointName.setPadding(5, 0, 5, 0);
 
-        MainMenuState state = (MainMenuState) FRAGUEL.getInstance()
+        MainMenuState state = (MainMenuState) ProjectAR.getInstance()
                 .getCurrentState();
 
         pointName.setText("nombre" + state.getGeoTaggingPoints().size());

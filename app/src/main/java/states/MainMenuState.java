@@ -30,9 +30,8 @@ import utils.NewRouteGeoTaggingForm;
 import utils.PointExtraInfoGeoTagging;
 import utils.SavePointTemplate;
 
-//import fraguel.android.notifications.UserOptionsTemplateNotification;
-//import fraguel.android.resources.ResourceManager;
-
+import notifications.UserOptionsTemplateNotification;
+import resources.ResourceManager;
 
 public class MainMenuState extends State {
 

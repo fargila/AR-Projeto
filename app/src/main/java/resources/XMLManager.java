@@ -1,11 +1,5 @@
 package resources;
 
-import android.os.Environment;
-import android.util.Log;
-
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
@@ -15,6 +9,12 @@ import java.util.Objects;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
+
+import android.os.Environment;
+import android.util.Log;
+import main.MinRouteInfo;
 import main.PointOI;
 import main.Route;
 

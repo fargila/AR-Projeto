@@ -6,7 +6,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import AR.CamLayer;
 import AR.Camera2Activity;
+import AR.GLView;
 import GPS.LatLon2UTM;
 import main.ProjectAR;
 import main.State;
@@ -20,7 +22,7 @@ public class ARState extends State {
     private static final int ARSTATE_STOP = 2;
 
     GLView glView;
-    private Camera2Activity mPreview;
+    private CamLayer mPreview;
 
     private LatLon2UTM ll;
     private float lastX;
@@ -84,7 +86,7 @@ public class ARState extends State {
     public void onLocationChanged(float[] values) {
         if (glView.scene.camera() == null)
             return;
-        ll.setVariables(values[0], values[1]);
+        ll.setVar(values[0], values[1]);
         float x = -(float) ll.getEasting();
         float z = -(float) ll.getNorthing(values[0]);
 

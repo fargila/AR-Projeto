@@ -22,8 +22,8 @@ import threads.ImageDownloadingThread;
 
 public class RouteInfoDialog extends Dialog {
 
-    private Route route;
-    private ImageView image;
+    private final Route route;
+    private final ImageView image;
 
     public RouteInfoDialog(Context context, Route r, boolean talk) {
         super(context);

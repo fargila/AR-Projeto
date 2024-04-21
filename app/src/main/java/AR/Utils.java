@@ -1,9 +1,5 @@
 package AR;
 
-import android.graphics.Bitmap;
-
-import androidx.appcompat.widget.ResourceManagerInternal;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,41 +8,69 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-public class Utils {
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import AR.core.Object3d;
+import resources.ResourceManager;
 
+
+public class Utils {
     public static final float DEG = (float) (Math.PI / 180f);
+
     private static final int BYTES_PER_FLOAT = 4;
 
-    public static Bitmap makeBitmapFromResourceId(String file){
+    /**
+     * Convenience method to create a Bitmap given a Context's drawable resource
+     * ID.
+     */
+    public static Bitmap makeBitmapFromResourceId(String file) {
         InputStream is;
-        try{
-            is = new FileInputStream(ResourceManager.getInstance()).getRootPath() + "" + file);
-
-        }
-        catch (FileNotFoundException e){
+        try {
+            is = new FileInputStream(ResourceManager.getInstance()
+                    .getRootPath() + "/ar/" + file);
+        } catch (FileNotFoundException e1) {
             return null;
         }
-        finally{
-            try{ is.close(); }
-            catch (IOException ignored){}
+        ;
+        Bitmap bitmap;
+        try {
+            bitmap = BitmapFactory.decodeStream(is);
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                // Ignore.
+            }
         }
+
         return bitmap;
     }
 
-    public static FloatBuffer makeFloatBuffer3(float $a, float $b, float $c){
-        ByteBuffer b = ByteBuffer.allocateDirect(3*BYTES_PER_FLOAT);
+    /**
+     * Add two triangles to the Object3d's faces using the supplied indices
+     */
+    public static void addQuad(Object3d $o, int $upperLeft, int $upperRight,
+                               int $lowerRight, int $lowerLeft) {
+        $o.faces().add((short) $upperLeft, (short) $lowerRight,
+                (short) $upperRight);
+        $o.faces().add((short) $upperLeft, (short) $lowerLeft,
+                (short) $lowerRight);
+    }
+
+    public static FloatBuffer makeFloatBuffer3(float $a, float $b, float $c) {
+        ByteBuffer b = ByteBuffer.allocateDirect(3 * BYTES_PER_FLOAT);
         b.order(ByteOrder.nativeOrder());
         FloatBuffer buffer = b.asFloatBuffer();
         buffer.put($a);
         buffer.put($b);
         buffer.put($c);
         buffer.position(0);
-
         return buffer;
     }
 
-    public static FloatBuffer makeFloatBuffer4(float $a, float $b, float $c, float $d){
-        ByteBuffer b = ByteBuffer.allocateDirect(4*BYTES_PER_FLOAT);
+    public static FloatBuffer makeFloatBuffer4(float $a, float $b, float $c,
+                                               float $d) {
+        ByteBuffer b = ByteBuffer.allocateDirect(4 * BYTES_PER_FLOAT);
         b.order(ByteOrder.nativeOrder());
         FloatBuffer buffer = b.asFloatBuffer();
         buffer.put($a);
@@ -54,7 +78,6 @@ public class Utils {
         buffer.put($c);
         buffer.put($d);
         buffer.position(0);
-
         return buffer;
     }
 }

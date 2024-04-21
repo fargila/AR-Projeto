@@ -1,26 +1,40 @@
 package states;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+//import com.google.android.maps.GeoPoint;
+//import com.google.android.maps.MapController;
+//import com.google.android.maps.MapView;
+//import com.google.android.maps.MyLocationOverlay;
+//import com.google.android.maps.Overlay;
+
 import com.google.android.gms.maps.MapView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import main.PointOI;
-import main.ProjectAR;
-import main.Route;
+import main.*;
+import GPS.GPSProximityRouteListener;
+import GPS.gpsProximityListener;
+import maps.*;
+import notifications.BackKeyNotification;
+import notifications.RouteSelectionNotification;
+import notifications.StopRouteNotification;
 import resources.ResourceManager;
+import utils.RouteInfoDialog;
 
 public class MapState extends State implements View.OnTouchListener {
 
