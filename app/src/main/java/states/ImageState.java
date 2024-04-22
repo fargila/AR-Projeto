@@ -266,7 +266,7 @@ public class ImageState extends State {
     }
 
     @Override
-    public boolean onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(Configuration newConfig) {
 
         if (isBigGalleryDisplayed) {
             switch (newConfig.orientation) {
@@ -288,7 +288,6 @@ public class ImageState extends State {
 
         }
 
-        return true;
     }
 
     @Override

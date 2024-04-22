@@ -22,7 +22,7 @@ public class gpsProximityListener extends gpsProximity{
 
         if(MapState.getInstance().getGPS().isDialogDisplayed()){
             PointInfoState state = (PointInfoState) ProjectAR.getInstance().getCurrentState();
-            Location.distanceBetween(latitude, longitude, state.getPointOI.coords[0], state.getPointOI().coords[1], results);
+            Location.distanceBetween(latitude, longitude, state.getPointOI().coords[0], state.getPointOI().coords[1], results);
 
             float offset = Math.abs(lastFix - results[0]){
                 if(offset <= 10.0f)

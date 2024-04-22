@@ -16,9 +16,10 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
 
+import com.example.arproject.R;
+
 import main.ProjectAR;
 import resources.ResourceManager;
-//import fraguel.android.R;
 
 public class BigImageAdapter extends BaseAdapter {
     int mGalleryItemBackground;

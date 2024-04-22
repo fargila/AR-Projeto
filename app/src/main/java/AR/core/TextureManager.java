@@ -3,7 +3,6 @@ package AR.core;
 import java.util.HashMap;
 import java.util.Set;
 
-//import fraguel.android.ar.Min3d;
 import AR.Min3d;
 import AR.Shared;
 import android.graphics.Bitmap;

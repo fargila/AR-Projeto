@@ -1,38 +1,62 @@
 package main;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
-import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
-import android.widget.Toast;
+import static android.app.Activity.RESULT_CANCELED;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Stack;
-import java.util.logging.Handler;
 
-import kotlin.Pair;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
+import android.util.Pair;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.Toast;
+
+//import com.google.android.maps.MapActivity;
+//import com.google.android.gms.maps.*;
+
+import com.example.arproject.R;
+
+import states.*;
 import resources.ResourceManager;
 
 public class ProjectAR extends MapActivity implements OnClickListener,
-        TextToSpeech.OnInitListener, TextToSpeech.OnUtteranceCompletedListener, View.OnTouchListener {
+        TextToSpeech.OnInitListener,
+        OnTouchListener {
 
     // Singleton
-    private static ProjectAR instance;
+    private static ProjectAR  instance;
     // Sensors info
     private SensorManager sensorManager;
     private SensorEventListener sensorListener;
@@ -71,12 +95,9 @@ public class ProjectAR extends MapActivity implements OnClickListener,
     // Menu variable buttons
     private static final int MENU_MAIN = 1;
     private static final int MENU_EXIT = 2;
-
     private ProgressDialog dialog;
 
-    /**
-     * Se crea el menu de opciones en función del estado
-     */
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -107,12 +128,12 @@ public class ProjectAR extends MapActivity implements OnClickListener,
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         // Eventos del menu de opciones del estado
-        if (!currentState.onStateOptionsItemSelected(item))
-        {
+        if (!currentState.onStateOptionsItemSelected(item)) {
+
             // Eventos del menu de opciones creados por defecto
-            switch (item.getItemId())
-            {
+            switch (item.getItemId()) {
                 case MENU_MAIN:
                     changeState(MainMenuState.STATE_ID);
                     return true;
@@ -139,15 +160,10 @@ public class ProjectAR extends MapActivity implements OnClickListener,
 
         // Singleton
         instance = this;
-
         // RequestServices (GPS & Sensors)
-
         requestServices();
-
         // Sensors
-
         newSensorListener();
-
         // requestUpdatesFromAllSensors
         activateSensors();
 
@@ -203,7 +219,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
+                                    ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.clear();
 
@@ -237,17 +253,19 @@ public class ProjectAR extends MapActivity implements OnClickListener,
 
     }
 
-    public void changeState(int id) {
-        if (currentState != null)
+    public void changeState(int id) 
+    {
+        if (currentState != null) 
         {
             if (currentState.id == id)
                 return;
             currentState.unload();
         }
         System.gc();
-        for (State s : states)
+        for (State s : states) 
+        
         {
-            if (s.id == id)
+            if (s.id == id) 
             {
                 currentState = s;
                 currentState.load();
@@ -283,7 +301,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
 
     public void activateSensors() {
         sensorManager.registerListener(sensorListener,
-                sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
+                sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR),
                 SensorManager.SENSOR_STATUS_ACCURACY_HIGH);
         sensorManager.registerListener(sensorListener,
                 sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
@@ -322,13 +340,13 @@ public class ProjectAR extends MapActivity implements OnClickListener,
     }
 
     public void cleanCache() {
-        String[] rutas = new File(ResourceManager.getInstance().getRootPath() + "/tmp").list();
+        String[] rutas = new File(ResourceManager.getInstance().getRootPath()
+                + "/tmp").list();
         int i = 0;
         File f;
-        while (true) {
-            assert rutas != null;
-            if (!(i < rutas.length)) break;
-            f = new File(ResourceManager.getInstance().getRootPath() + "/tmp/" + rutas[i]);
+        while (i < rutas.length) {
+            f = new File(ResourceManager.getInstance().getRootPath() + "/tmp/"
+                    + rutas[i]);
             if (f.isDirectory())
                 cleanDir(f.getPath());
             else
@@ -341,9 +359,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
         String[] ficheros = new File(path).list();
         int i = 0;
         File f;
-        while (true) {
-            assert ficheros != null;
-            if (!(i < ficheros.length)) break;
+        while (i < ficheros.length) {
             f = new File(path + "/" + ficheros[i]);
             f.delete();
             i++;
@@ -363,31 +379,36 @@ public class ProjectAR extends MapActivity implements OnClickListener,
         sensorListener = new SensorEventListener() {
 
             @Override
-            public synchronized void onAccuracyChanged(Sensor sensor, int accuracy) {
+            public synchronized void onAccuracyChanged(Sensor sensor,
+                                                       int accuracy) {
             }
 
             @Override
-            public void onSensorChanged(SensorEvent event) {
-                if (event.sensor.getType() == Sensor.TYPE_ORIENTATION) {
-                    FRAGUEL.getInstance().sOrientation[0] = event.values[0];
-                    FRAGUEL.getInstance().sOrientation[1] = event.values[1];
-                    FRAGUEL.getInstance().sOrientation[2] = event.values[2];
-                } else if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-                    FRAGUEL.getInstance().sAccelerometer[0] = event.values[0];
-                    FRAGUEL.getInstance().sAccelerometer[1] = event.values[1];
-                    FRAGUEL.getInstance().sAccelerometer[2] = event.values[2];
-                } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
-                    FRAGUEL.getInstance().sMagnetic[0] = event.values[0];
-                    FRAGUEL.getInstance().sMagnetic[1] = event.values[1];
-                    FRAGUEL.getInstance().sMagnetic[2] = event.values[2];
+            public void onSensorChanged(SensorEvent event)
+            {
+                if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) 
+                {
+                    ProjectAR.getInstance().sOrientation[0] = event.values[0];
+                    ProjectAR.getInstance().sOrientation[1] = event.values[1];
+                    ProjectAR.getInstance().sOrientation[2] = event.values[2];
+                } 
+                else if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) 
+                {
+                    ProjectAR.getInstance().sAccelerometer[0] = event.values[0];
+                    ProjectAR.getInstance().sAccelerometer[1] = event.values[1];
+                    ProjectAR.getInstance().sAccelerometer[2] = event.values[2];
+                } 
+                else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) 
+                {
+                    ProjectAR.getInstance().sMagnetic[0] = event.values[0];
+                    ProjectAR.getInstance().sMagnetic[1] = event.values[1];
+                    ProjectAR.getInstance().sMagnetic[2] = event.values[2];
                 }
 
-                if (SensorManager.getRotationMatrix(rotMatrix, incMatrix,
-                        sAccelerometer, sMagnetic)) {
+                if (SensorManager.getRotationMatrix(rotMatrix, incMatrix, sAccelerometer, sMagnetic))
+                {
                     SensorManager.getOrientation(rotMatrix, sOrientation);
-
-                    // pasamos los valores de rotación sobre cada eje al estado
-                    // actual
+                    // pasamos los valores de rotación sobre cada eje al estado actual
                     sOrientation[0] = sOrientation[0] * RAD2DEG;
                     sOrientation[1] = sOrientation[1] * RAD2DEG;
                     sOrientation[2] = sOrientation[2] * RAD2DEG;
@@ -403,26 +424,22 @@ public class ProjectAR extends MapActivity implements OnClickListener,
     public ViewGroup getView() {
         return view;
     }
-
     public void setView(ViewGroup view) {
         this.view = view;
     }
-
     public float[] getRotMatrix() {
         return rotMatrix;
     }
-
     public float[] getIncMatrix() {
         return incMatrix;
     }
 
     public State getCurrentState() {
-
         return this.currentState;
     }
 
-    public void createOneButtonNotification(int title, int msg,
-                                            DialogInterface.OnClickListener listener) {
+    //2x
+    public void createOneButtonNotification(int title, int msg, DialogInterface.OnClickListener listener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
         builder.setMessage(msg);
@@ -434,57 +451,12 @@ public class ProjectAR extends MapActivity implements OnClickListener,
 
     }
 
-    public void createOneButtonNotification(String title, String msg,
-                                            DialogInterface.OnClickListener listener) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title);
-        builder.setMessage(msg);
-        builder.setCancelable(false);
-        builder.setPositiveButton(R.string.accept_spanish, listener);
-        AlertDialog alert = builder.create();
-        alert.getWindow().setGravity(Gravity.TOP);
-        alert.show();
-
-    }
-
+    //3x
     public void createTwoButtonNotification(int title, int msg,
                                             int positiveButton, int negativeButton,
                                             DialogInterface.OnClickListener listenerPositiveButton,
                                             DialogInterface.OnClickListener listenerNegativeButton) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(
-                FRAGUEL.getInstance());
-        builder.setTitle(title);
-        builder.setMessage(msg);
-        builder.setCancelable(false);
-        builder.setPositiveButton(positiveButton, listenerPositiveButton);
-        builder.setNegativeButton(negativeButton, listenerNegativeButton);
-        AlertDialog alert = builder.create();
-        alert.getWindow().setGravity(Gravity.TOP);
-        alert.show();
-    }
-
-    public void createTwoButtonNotification(String title, String msg,
-                                            int positiveButton, int negativeButton,
-                                            DialogInterface.OnClickListener listenerPositiveButton,
-                                            DialogInterface.OnClickListener listenerNegativeButton) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(
-                FRAGUEL.getInstance());
-        builder.setTitle(title);
-        builder.setMessage(msg);
-        builder.setCancelable(false);
-        builder.setPositiveButton(positiveButton, listenerPositiveButton);
-        builder.setNegativeButton(negativeButton, listenerNegativeButton);
-        AlertDialog alert = builder.create();
-        alert.getWindow().setGravity(Gravity.TOP);
-        alert.show();
-    }
-
-    public void createTwoButtonNotification(int title, String msg,
-                                            int positiveButton, int negativeButton,
-                                            DialogInterface.OnClickListener listenerPositiveButton,
-                                            DialogInterface.OnClickListener listenerNegativeButton) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(
-                FRAGUEL.getInstance());
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProjectAR.getInstance());
         builder.setTitle(title);
         builder.setMessage(msg);
         builder.setCancelable(false);
@@ -499,8 +471,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
                              DialogInterface.OnClickListener clickListener,
                              DialogInterface.OnKeyListener keyListener) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(
-                FRAGUEL.getInstance());
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProjectAR.getInstance());
         builder.setTitle(title);
         builder.setItems(items, clickListener);
         if (keyListener != null)
@@ -515,8 +486,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
                                              DialogInterface.OnClickListener clickListener,
                                              DialogInterface.OnKeyListener keyListener) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(
-                FRAGUEL.getInstance());
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProjectAR.getInstance());
         builder.setTitle(title);
         builder.setSingleChoiceItems(items, -1, clickListener);
         if (keyListener != null)
@@ -526,11 +496,11 @@ public class ProjectAR extends MapActivity implements OnClickListener,
         alert.show();
     }
 
+    //2x
     public void createCustomDialog(String title, View view,
                                    DialogInterface.OnClickListener listenerPositiveButton,
                                    String button, DialogInterface.OnKeyListener keyListener) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(
-                FRAGUEL.getInstance());
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProjectAR.getInstance());
         builder.setTitle(title);
         builder.setView(view);
         builder.setNeutralButton(button, listenerPositiveButton);
@@ -538,24 +508,6 @@ public class ProjectAR extends MapActivity implements OnClickListener,
             builder.setOnKeyListener(keyListener);
         AlertDialog alert = builder.create();
         alert.show();
-    }
-
-    public void createCustomDialog(String title, View view,
-                                   DialogInterface.OnClickListener listenerFirstButton,
-                                   String firstButton,
-                                   DialogInterface.OnClickListener listenerSecondButton,
-                                   String secondButton, DialogInterface.OnKeyListener keyListener) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(
-                FRAGUEL.getInstance());
-        builder.setTitle(title);
-        builder.setView(view);
-        builder.setNeutralButton(firstButton, listenerFirstButton);
-        builder.setNegativeButton(secondButton, listenerSecondButton);
-        if (keyListener != null)
-            builder.setOnKeyListener(keyListener);
-        AlertDialog alert = builder.create();
-        alert.show();
-
     }
 
     @Override
@@ -576,16 +528,16 @@ public class ProjectAR extends MapActivity implements OnClickListener,
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == MY_DATA_CHECK_CODE) {
-            if (resultCode != TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
+        if (requestCode == MY_DATA_CHECK_CODE) 
+        {
+            if (resultCode != TextToSpeech.Engine.CHECK_VOICE_DATA_PASS)
+            {
                 // si no tiene los datos los instala
                 Intent installIntent = new Intent();
-                installIntent
-                        .setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
-                Toast.makeText(ProjectAR.getInstance().getApplicationContext(),
-                        "Instalando las librerías necesarias",
+                installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+                Toast.makeText(ProjectAR.getInstance().getApplicationContext(), "Instalando bibliotecas",
                         Toast.LENGTH_SHORT).show();
-                FRAGUEL.getInstance().startActivity(installIntent);
+                ProjectAR.getInstance().startActivity(installIntent);
 
             }
             tts = new TextToSpeech(ProjectAR.getInstance().getApplicationContext(), this);
@@ -593,6 +545,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
 
     }
 
+    @SuppressLint("HandlerLeak")
     private void initHandler() {
         handler = new Handler() {
 
@@ -604,6 +557,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
         };
     }
 
+    @SuppressLint("HandlerLeak")
     private void initImageHandler() {
         imageHandler = new Handler() {
             @Override
@@ -613,6 +567,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
         };
     }
 
+    @SuppressLint("HandlerLeak")
     private void initRouteHandler() {
         routeHandler = new Handler() {
             @Override
@@ -623,23 +578,24 @@ public class ProjectAR extends MapActivity implements OnClickListener,
         };
     }
 
+    @SuppressLint("HandlerLeak")
     private void initFileHandler() {
         fileHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 if (msg.arg1 == 1) {
-                    if (ProjectAR.getInstance().getCurrentState().id == RouteManagerState.STATE_ID)
-                    {
-                        RouteManagerState state = (RouteManagerState)ProjectAR.getInstance().getCurrentState();
+                    if (ProjectAR.getInstance().getCurrentState().id == RouteManagerState.STATE_ID) {
+                        RouteManagerState state = (RouteManagerState) ProjectAR
+                                .getInstance().getCurrentState();
                         state.AllAvailableRoutes();
                     }
-                } else if (msg.arg1 == 2)
-                {
+                } else if (msg.arg1 == 2) {
                     Toast.makeText(
                                     ProjectAR.getInstance().getApplicationContext(),
-                                    "Ruta descargada con éxito", Toast.LENGTH_LONG).show();
+                                    "Ruta descargada con éxito", Toast.LENGTH_LONG)
+                            .show();
                     ProjectAR.getInstance().LoadRoutes();
-                    ProjectAR.getInstance().changeState(MainMenuState.STATE_ID);
+                   ProjectAR.getInstance().changeState(MainMenuState.STATE_ID);
                 }
             }
         };
@@ -690,14 +646,12 @@ public class ProjectAR extends MapActivity implements OnClickListener,
     }
 
     public void talkSpeech(String s, int id) {
-        if (tts != null)
-        {
+        if (tts != null) {
             tts.stop();
             ttsHashMap.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,
                     String.valueOf(id));
             tts.speak(s, TextToSpeech.QUEUE_FLUSH, ttsHashMap);
-        }
-        else
+        } else
             Toast.makeText(ProjectAR.getInstance().getApplicationContext(),
                     R.string.no_tts_spanish, Toast.LENGTH_LONG).show();
     }
@@ -717,11 +671,11 @@ public class ProjectAR extends MapActivity implements OnClickListener,
         return false;
     }
 
-    public void showProgressDialog() {
-        dialog = ProgressDialog.show(ProjectAR.getInstance(), "",
-                "Cargando. Por favor espere...", true);
-
-    }
+//    public void showProgressDialog() {
+//        dialog = ProgressDialog.show(ProjectAR.getInstance(), "",
+//                "Cargando. Por favor espere...", true);
+//
+//    }
 
     public void dismissProgressDialog() {
         if (dialog != null)
@@ -732,15 +686,11 @@ public class ProjectAR extends MapActivity implements OnClickListener,
     public Pair<Route, PointOI> getRouteandPointbyId(int routeId, int pointId) {
         Route route = null;
         PointOI point = null;
-        for (Route r : routes)
-        {
-            if (r.id == routeId)
-            {
+        for (Route r : routes) {
+            if (r.id == routeId) {
                 route = r;
-                for (PointOI p : route.pointsOI)
-                {
-                    if (p.id == pointId)
-                    {
+                for (PointOI p : route.pointsOI) {
+                    if (p.id == pointId) {
                         point = p;
                         break;
                     }

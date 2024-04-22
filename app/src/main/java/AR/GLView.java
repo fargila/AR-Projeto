@@ -53,7 +53,7 @@ public class GLView extends GLSurfaceView implements ISceneController, Camera.Pr
         //
         Shared.context(context);
         scene = new Scene(this);
-        fraguel.android.ar.core.Renderer r = new fraguel.android.ar.core.Renderer(scene);
+        ProjectAR.android.ar.core.Renderer r = new ProjectAR().android.ar.core.Renderer(scene);
         Shared.renderer(r);
 
         _glSurfaceView = this;
@@ -101,14 +101,14 @@ public class GLView extends GLSurfaceView implements ISceneController, Camera.Pr
      * thread-safe.
      */
     public void onInitScene() {
-        ARState arState= (ARState)FRAGUEL.getInstance().getCurrentState();
+        ARState arState= (ARState)ProjectAR.getInstance().getCurrentState();
         LatLon2UTM ll = new LatLon2UTM();
         ll.setVariables(arState.getPointOI().arCoords[0], arState.getPointOI().arCoords[1]);
         float x = -(float) ll.getEasting();
         float y = 0;//arState.getPointOI().arCoords[2];
         float z = -(float) ll.getNorthing(arState.getPointOI().arCoords[0]);
         if (arState.getPointOI().urlfilesAr!=null){
-            Toast.makeText(FRAGUEL.getInstance().getApplicationContext(), "Cargando Realidad Aumentada...", Toast.LENGTH_LONG).show();
+            Toast.makeText(ProjectAR.getInstance().getApplicationContext(), "Carregando a Realidade Aumentada...", Toast.LENGTH_LONG).show();
 
             for (String s: arState.getPointOI().urlfilesAr){
                 File f = new File(ResourceManager.getInstance().getRootPath()+"/ar/"+s);
@@ -117,9 +117,9 @@ public class GLView extends GLSurfaceView implements ISceneController, Camera.Pr
                 }
             }
         }
-        Toast.makeText(FRAGUEL.getInstance().getApplicationContext(), "Sistema cargado", Toast.LENGTH_LONG).show();
+        Toast.makeText(ProjectAR.getInstance().getApplicationContext(), "Sistema carregado", Toast.LENGTH_LONG).show();
         if (arState.getPointOI().textAr!=null && arState.getPointOI().textAr!="")
-            FRAGUEL.getInstance().talk(arState.getPointOI().textAr);
+            ProjectAR.getInstance().talk(arState.getPointOI().textAr);
 
     }
 

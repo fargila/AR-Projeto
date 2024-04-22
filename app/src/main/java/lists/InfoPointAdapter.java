@@ -39,7 +39,7 @@ public class InfoPointAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View arg1, ViewGroup arg2) {
-        Display display = ((WindowManager) FRAGUEL.getInstance()
+        Display display = ((WindowManager) ProjectAR.getInstance()
                 .getApplicationContext()
                 .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         int width = display.getWidth();

@@ -60,8 +60,7 @@ public abstract class State implements Comparable<State> {
 
     // estos dos métodos son para probar los datos de los sensores
 
-    public boolean onConfigurationChanged(Configuration newConfig) {
-        return false;
+    public void onConfigurationChanged(Configuration newConfig) {
     }
 
     /**

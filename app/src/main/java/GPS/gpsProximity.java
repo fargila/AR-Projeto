@@ -24,8 +24,8 @@ public class gpsProximity {
     protected double latitude=0, longitude=0, altitude=0;
     protected boolean hasBeenVisited;
     protected ArrayList<PointOI> pointsVisited;
-//    private Vibrator v;
-//    private MediaPlayer soundClip;
+    private Vibrator v;
+    private MediaPlayer soundClip;
 
     public void GPSProximity(){
         v = (Vibrator) ProjectAR.getInstance().
