@@ -11,10 +11,7 @@ import main.PointOI;
 
 public class PointsHandler extends DefaultHandler {
 
-    /*Essa classe é um manipulador SAX (Simple API for XML) para processar arquivos XML que contêm
-     informações sobre os pontos de interesse (POIs). O SAX é uma API de processamento de XML que
-     permite analisar os documentos XML de forma sequencial.
-
+    /*
     -> startDocument(): É chamado quando o parser SAX inicia o processamento do documento
     XML. Ele inicializa as variáveis de controle e cria uma lista para armazenar os POIs.
 

@@ -1,0 +1,11 @@
+[app.states] -------------------------------------------------------------------------------------------
+Local de conexão central entre os estados da minha aplicação, cada um dos estados vai
+receber as informações dos outros arquivos e criar um método dentra as diferentes classes para
+manipular essas dados e direncionar para o meu main.ProjectAR, por isso todos os 'imports' do
+meu arquivo states.
+
+[ARState] ------------------------------------------------------------------------------------------
+Esta classe representa a parte do aplicativo que lida com funcionalidades
+específicas relacionadas à realidade aumentada, como a visualização da cena 3D, controle da
+câmera e interação com o usuário através de um menu de opções.
+

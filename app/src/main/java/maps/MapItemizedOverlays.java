@@ -119,7 +119,7 @@ public class MapItemizedOverlays extends ItemizedOverlay implements
             Bitmap bmp = BitmapFactory.decodeFile(path);
             v.setImageBitmap(bmp);
         } else {
-            v.setImageDrawable(FRAGUEL.getInstance().getResources()
+            v.setImageDrawable(ProjectAR.getInstance().getResources()
                     .getDrawable(R.drawable.loading));
             ImageDownloadingThread t = MapState.getInstance().getImageThread();
             String[] url = { overlay.getPointOI().icon };
@@ -132,17 +132,17 @@ public class MapItemizedOverlays extends ItemizedOverlay implements
         }
 
         popup.findViewById(R.id.btn_popupPI_info).setOnClickListener(
-                (OnClickListener) FRAGUEL.getInstance());
+                (OnClickListener) ProjectAR.getInstance());
         popup.findViewById(R.id.btn_popupPI_photo).setOnClickListener(
-                (OnClickListener) FRAGUEL.getInstance());
+                (OnClickListener) ProjectAR.getInstance());
         popup.findViewById(R.id.btn_popupPI_ar).setOnClickListener(
-                (OnClickListener) FRAGUEL.getInstance());
+                (OnClickListener) ProjectAR.getInstance());
         popup.findViewById(R.id.btn_popupPI_video).setOnClickListener(
-                (OnClickListener) FRAGUEL.getInstance());
+                (OnClickListener) ProjectAR.getInstance());
 
         boolean isPopup = false;
-        for (int i = 0; i < FRAGUEL.getInstance().getView().getChildCount(); i++) {
-            if (FRAGUEL.getInstance().getView().getChildAt(i).getId() == popup
+        for (int i = 0; i < ProjectAR.getInstance().getView().getChildCount(); i++) {
+            if (ProjectAR.getInstance().getView().getChildAt(i).getId() == popup
                     .getId())
                 isPopup = true;
         }
@@ -168,9 +168,10 @@ public class MapItemizedOverlays extends ItemizedOverlay implements
     @Override
     public void onLongPress(MotionEvent e) {
         if (!MapState.getInstance().isContextMenuDisplayed()
-                && !MapState.getInstance().getGPS().isRouteMode()) {
+                && !MapState.getInstance().getGPS().isRouteMode())
+        {
             GeoPoint point = MapState.getInstance().getMapView()
-                    .getProjection().fromPixels((int) e.getX(), (int) e.getY());
+                                     .getProjection().fromPixels((int) e.getX(), (int) e.getY());
             float latitude = (float) point.getLatitudeE6() / 1000000;
             float longitude = (float) point.getLongitudeE6() / 1000000;
             float distance = Float.MAX_VALUE;
@@ -178,7 +179,7 @@ public class MapItemizedOverlays extends ItemizedOverlay implements
             PointOI pTmp = null;
             float[] results = new float[3];
 
-            for (Route r : FRAGUEL.getInstance().routes) {
+            for (Route r : ProjectAR.getInstance().routes) {
                 for (PointOI p : r.pointsOI) {
                     Location.distanceBetween(latitude, longitude, p.coords[0],
                             p.coords[1], results);
@@ -195,12 +196,12 @@ public class MapItemizedOverlays extends ItemizedOverlay implements
             MapState.getInstance().loadData(rTmp, pTmp);
             MapState.getInstance().setContextMenuDisplayed(true);
             MapState.getInstance().options[1] = "Desde: " + pTmp.title;
-            FRAGUEL.getInstance().createDialog("Comenzar Ruta: " + rTmp.name,
+            ProjectAR.getInstance().createDialog("Començar a rota: " + rTmp.name,
                     MapState.getInstance().options,
                     new StartRouteNotification(), new BackKeyNotification());
         } else if (!MapState.getInstance().isContextMenuDisplayed()) {
             MapState.getInstance().setContextMenuDisplayed(true);
-            FRAGUEL.getInstance().createDialog("¿Desea abandonar la ruta?",
+            ProjectAR.getInstance().createDialog("¿Deseja abandonar a rota?",
                     options, new StopRouteNotification(),
                     new BackKeyNotification());
         }

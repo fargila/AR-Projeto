@@ -1,0 +1,14 @@
+[Camlayer] -----------------------------------------------------------------------------------------
+Classe responsável por gerenciar a visualização da câmera em um aplicativo, é com a ajuda dela
+que podemos visualizar o mundo real pela câmera do celular lidando com a inicialização,
+pausa e destruição da visualização, bem como com a configuração dos parâmetros da
+câmera e o processamento dos dados da visualização.
+
+[CellOrientation] ----------------------------------------------------------------------------------
+Este código é parte do sistema de realidade aumentada, ele utiliza a orientação do dispositivo
+para renderizar objetos virtuais de forma adequada à posição do dispositivo no espaço.
+
+[GLView] -------------------------------------------------------------------------------------------
+A classe GLView encapsula a lógica para renderizar gráficos em 3D usando OpenGL na
+aplicação de realidade aumentada. Ela fornece métodos para inicializar e atualizar
+a cena, bem como para lidar com o FPS da câmera.

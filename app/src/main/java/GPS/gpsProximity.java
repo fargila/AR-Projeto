@@ -29,19 +29,15 @@ public class gpsProximity {
 
     public void GPSProximity(){
         v = (Vibrator) ProjectAR.getInstance().
-                getSystemService(ProjectAR.getInstace().
-                        getApplicationContext().VIBRATOR_SERVICE);
+                getSystemService(ProjectAR.getInstace().getApplicationContext().VIBRATOR_SERVICE);
 
-        soundClip = MediaPlayer.create(ProjectAR.getInstace().
-                getApplicationContext(), R.raw.notification_sound);
+        soundClip = MediaPlayer.create(ProjectAR.getInstace().getApplicationContext(), R.raw.notification_sound);
 
         pointsVisited = new ArrayList<PointOI>();
         lastFix = 0;
     }
 
-    public void onLocationChanged(Location location) {
-
-    }
+    public void onLocationChanged(Location location) {}
     public void mediaNotification(){
         v.vibrate(1000);
         soundClip.start();

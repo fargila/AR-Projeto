@@ -14,6 +14,8 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
 
+import com.example.arproject.R;
+
 import resources.ResourceManager;
 //import fraguel.android.R;
 import main.ProjectAR;
@@ -28,8 +30,7 @@ public class ImageAdapter extends BaseAdapter {
     public ImageAdapter(Context c) {
         mContext = c;
         TypedArray a = ProjectAR.getInstance().obtainStyledAttributes(
-                R.styleable.HelloGallery);
-        mGalleryItemBackground = a.getResourceId(
+                R.styleable.HelloGallery);mGalleryItemBackground = a.getResourceId(
                 R.styleable.HelloGallery_android_galleryItemBackground, 0);
         a.recycle();
     }

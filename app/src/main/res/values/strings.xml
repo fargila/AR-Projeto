@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">AR project</string>
+    <string name="free_mode_menu">Free Mode Menu</string>
+    <string name="back">Back</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="free_mode">Free Mode</string>
+    <string name="campaign_mode">Campaign Mode</string>
+    <string name="close_application">Close Application</string>
+    <string name="inicio_mapa">Inicio Mapa</string>
+    <string name="mapKey">AIzaSyCQo5KWBHJetejpbpDIXRwjftBbVgXy3Bg</string>
 </resources>

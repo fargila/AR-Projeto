@@ -10,9 +10,7 @@ import main.MinRouteInfo;
 
 public class MinRouteInfoHandler extends DefaultHandler {
 
-    /*Classe para manipular um SAX, mas é usado para processar um tipo diferente de XML,
-    que contém informações resumidas sobre rotas mínimas.
-
+    /*
     ->startDocument(): Este método é chamado quando o parser SAX inicia o processamento do documento
     XML. Ele inicializa as variáveis de controle e cria uma lista para armazenar as informações sobre as rotas mínimas.
 

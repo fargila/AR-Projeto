@@ -14,6 +14,8 @@ import android.widget.Gallery;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import com.example.arproject.R;
+
 import gallery.BigImageAdapter;
 import gallery.FullScreenGallery;
 import gallery.ImageAdapter;
@@ -22,12 +24,6 @@ import resources.ResourceManager;
 import threads.ImageDownloadingThread;
 import utils.InfoText;
 import utils.TitleTextView;
-//import fraguel.android.gallery.BigImageAdapter;
-//import fraguel.android.gallery.FullScreenGallery;
-//import fraguel.android.gallery.ImageAdapter;
-//import fraguel.android.resources.ResourceManager;
-//import fraguel.android.threads.ImageDownloadingThread;
-
 
 public class ImageState extends State {
 
@@ -57,8 +53,7 @@ public class ImageState extends State {
     @Override
     public void load() {
         System.gc();
-        viewGroup = new LinearLayout(ProjectAR.getInstance()
-                .getApplicationContext());
+        viewGroup = new LinearLayout(ProjectAR.getInstance().getApplicationContext());
         ((LinearLayout) viewGroup).setOrientation(LinearLayout.VERTICAL);
 
         title = new TitleTextView(ProjectAR.getInstance().getApplicationContext());
@@ -75,8 +70,7 @@ public class ImageState extends State {
         setParamsBigGallery();
 
         sv = new ScrollView(ProjectAR.getInstance().getApplicationContext());
-        sv.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT));
+        sv.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
         text = new InfoText(ProjectAR.getInstance().getApplicationContext());
 
@@ -97,7 +91,8 @@ public class ImageState extends State {
         title.setText(p.title + " - " + r.name);
         String[] imgs = new String[p.images.size()];
         int i = 0;
-        for (Pair<String, String> s : p.images) {
+        for (Pair<String, String> s : p.images)
+        {
             imgs[i] = s.second;
             i++;
         }
@@ -131,13 +126,17 @@ public class ImageState extends State {
     @Override
     public void onUtteranceCompleted(String id) {
 
-        if (!stop) {
+        if (!stop)
+        {
             presentationIndex++;
-            if (presentationIndex < bigGallery.getCount()) {
+            if (presentationIndex < bigGallery.getCount())
+            {
                 automaticChange = true;
                 bigGallery.setSelection(presentationIndex, true);
 
-            } else {
+            }
+            else
+            {
                 isPresentation = false;
                 bigGallery.setKeepScreenOn(false);
 
@@ -149,24 +148,24 @@ public class ImageState extends State {
 
     private void setParamsSmallGallery() {
         gallery = new Gallery(ProjectAR.getInstance().getApplicationContext());
-        imageAdapter = new ImageAdapter(ProjectAR.getInstance()
-                .getApplicationContext());
+        imageAdapter = new ImageAdapter(ProjectAR.getInstance().getApplicationContext());
         gallery.setAdapter(imageAdapter);
         gallery.setHorizontalScrollBarEnabled(true);
 
         gallery.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1,
-                                    int position, long arg3) {
-                if (currentIndex == position) {
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                if (currentIndex == position)
+                {
                     viewGroup.removeAllViews();
                     viewGroup.addView(bigGallery);
                     bigGallery.setSelection(position, true);
                     currentIndex = -1;
                     isBigGalleryDisplayed = true;
                     ProjectAR.getInstance().stopTalking();
-                } else
+                }
+                else
                     currentIndex = position;
             }
         });
@@ -219,26 +218,30 @@ public class ImageState extends State {
         bigGallery.setOnItemSelectedListener(new OnItemSelectedListener() {
 
             @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int position, long arg3) {
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
 
                 text.setText(point.images.get(position).first);
-                if (!isPresentation) {
+                if (!isPresentation)
+                {
                     if (ProjectAR.getInstance().isTalking())
                         ProjectAR.getInstance().stopTalking();
-                } else {
-
-                    if (orientationChange) {
+                }
+                else
+                {
+                    if (orientationChange)
+                    {
                         // wait until gallery complete it's orientation change
-                    } else if (automaticChange) {
-                        ProjectAR.getInstance().talkSpeech(
-                                (String) text.getText(), position);
+                    }
+                    else if (automaticChange)
+                    {
+                        ProjectAR.getInstance().talkSpeech((String) text.getText(), position);
                         automaticChange = false;
-                    } else {
+                    }
+                    else
+                    {
                         presentationIndex = position;
                         ProjectAR.getInstance().stopTalking();
-                        ProjectAR.getInstance().talkSpeech(
-                                (String) text.getText(), position);
+                        ProjectAR.getInstance().talkSpeech((String) text.getText(), position);
                         stop = true;
                     }
 
@@ -268,12 +271,11 @@ public class ImageState extends State {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
 
-        if (isBigGalleryDisplayed) {
-            switch (newConfig.orientation) {
+        if (isBigGalleryDisplayed)
+        {
+            switch (newConfig.orientation)
+            {
                 case Configuration.ORIENTATION_LANDSCAPE:
-                    bigGallery.setOrientationChanged(true);
-                    orientationChange = true;
-                    break;
 
                 case Configuration.ORIENTATION_PORTRAIT:
                     bigGallery.setOrientationChanged(true);
@@ -295,24 +297,20 @@ public class ImageState extends State {
         menu.clear();
         if (!isPresentation)
             menu.add(0, INFOSTATE_SPEECH, 0,
-                    R.string.infostate_menu_speechPresentation).setIcon(
-                    R.drawable.ic_menu_talkplay);
+                    R.string.infostate_menu_speechPresentation).setIcon(R.drawable.ic_menu_talkplay);
         else
             menu.add(0, INFOSTATE_STOP_SPEECH, 0,
-                    R.string.infostate_menu_stopPresentation).setIcon(
-                    R.drawable.ic_menu_talkstop);
-        menu.add(0, INFOSTATE_STOP_RECORD, 0, R.string.infostate_menu_stop)
-                .setIcon(R.drawable.ic_menu_talkstop);
-        menu.add(0, INFOSTATE_REPEAT_RECORD, 0, R.string.infostate_menu_repeat)
-                .setIcon(R.drawable.ic_menu_talkplay);
+                    R.string.infostate_menu_stopPresentation).setIcon(R.drawable.ic_menu_talkstop);
+        menu.add(0, INFOSTATE_STOP_RECORD, 0, R.string.infostate_menu_stop).setIcon(R.drawable.ic_menu_talkstop);
+        menu.add(0, INFOSTATE_REPEAT_RECORD, 0, R.string.infostate_menu_repeat).setIcon(R.drawable.ic_menu_talkplay);
 
         return menu;
     }
 
     @Override
     public boolean onStateOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
+        switch (item.getItemId())
+        {
             case INFOSTATE_STOP_RECORD:
                 ProjectAR.getInstance().stopTalking();
                 return true;
@@ -321,7 +319,8 @@ public class ImageState extends State {
                 ProjectAR.getInstance().talk((String) text.getText());
                 return true;
             case INFOSTATE_SPEECH:
-                if (!isBigGalleryDisplayed) {
+                if (!isBigGalleryDisplayed)
+                {
                     viewGroup.removeAllViews();
                     viewGroup.addView(bigGallery);
                     currentIndex = -1;

@@ -1,0 +1,8 @@
+[MinRouteInfoHandler] ------------------------------------------------------------------------------
+Classe para manipular um SAX, mas é usado para processar um tipo diferente de XML,
+que contém informações resumidas sobre rotas mínimas.
+
+[PointsHandler] ------------------------------------------------------------------------------------
+Essa classe é um manipulador SAX (Simple API for XML) para processar arquivos XML que contêm
+informações sobre os pontos de interesse (POIs). O SAX é uma API de processamento de XML que
+permite analisar os documentos XML de forma sequencial.

@@ -1,0 +1,5 @@
+[app.layout] ---------------------------------------------------------------------------------------
+É no meu layout onde fica o design principal do app, ou seja, a interface humano-computador, onde
+meu usuário irá experienciar todos os atirubutos que o meu aplicativo vai oferecer, nesse caso, o
+meu menu oferece uma lista de 3 opções entre para os pontos de localização que o usuário vai querer
+navegar pelo campus. (preciso e vou ter que melhorar esse design).

@@ -45,6 +45,7 @@ import android.widget.Toast;
 
 //import com.google.android.maps.MapActivity;
 //import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.MapActivity;
 
 import com.example.arproject.R;
 
@@ -52,8 +53,8 @@ import states.*;
 import resources.ResourceManager;
 
 public class ProjectAR extends MapActivity implements OnClickListener,
-        TextToSpeech.OnInitListener,
-        OnTouchListener {
+                                                      TextToSpeech.OnInitListener,
+                                                      OnTouchListener {
 
     // Singleton
     private static ProjectAR  instance;
@@ -64,10 +65,8 @@ public class ProjectAR extends MapActivity implements OnClickListener,
     private float[] sOrientation = { 0, 0, 0 };
     private float[] sAccelerometer = { 0, 0, 0 };
     private float[] sMagnetic = { 0, 0, 0 };
-    private float[] rotMatrix = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0 };
-    private float[] incMatrix = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0 };
+    private float[] rotMatrix = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private float[] incMatrix = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     private static final float RAD2DEG = (float) (180 / Math.PI);
 
     // TextToSpeech
@@ -130,10 +129,11 @@ public class ProjectAR extends MapActivity implements OnClickListener,
     public boolean onOptionsItemSelected(MenuItem item) {
 
         // Eventos del menu de opciones del estado
-        if (!currentState.onStateOptionsItemSelected(item)) {
-
+        if (!currentState.onStateOptionsItemSelected(item))
+        {
             // Eventos del menu de opciones creados por defecto
-            switch (item.getItemId()) {
+            switch (item.getItemId())
+            {
                 case MENU_MAIN:
                     changeState(MainMenuState.STATE_ID);
                     return true;
@@ -153,7 +153,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                             WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         view = new FrameLayout(this);
         this.setContentView(view);
@@ -169,10 +169,12 @@ public class ProjectAR extends MapActivity implements OnClickListener,
 
         // Routes and points OI
         String state = Environment.getExternalStorageState();
-        if (!Environment.MEDIA_MOUNTED.equals(state)) {
+        if (!Environment.MEDIA_MOUNTED.equals(state))
+        {
             Log.d("FRAGUEL", "SD Card not avaliable");
             System.exit(RESULT_CANCELED);
-        } else
+        }
+        else
             Log.d("FRAGUEL", "SD Card ready");
 
         LoadRoutes();
@@ -218,8 +220,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.clear();
 
@@ -243,7 +244,8 @@ public class ProjectAR extends MapActivity implements OnClickListener,
     }
 
     public void addState(State state, boolean change) {
-        for (State s : states) {
+        for (State s : states)
+        {
             if (s.compareTo(state) == 0)
                 return;
         }
@@ -262,8 +264,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
             currentState.unload();
         }
         System.gc();
-        for (State s : states) 
-        
+        for (State s : states)
         {
             if (s.id == id) 
             {
@@ -344,7 +345,8 @@ public class ProjectAR extends MapActivity implements OnClickListener,
                 + "/tmp").list();
         int i = 0;
         File f;
-        while (i < rutas.length) {
+        while (i < rutas.length)
+        {
             f = new File(ResourceManager.getInstance().getRootPath() + "/tmp/"
                     + rutas[i]);
             if (f.isDirectory())
@@ -433,7 +435,6 @@ public class ProjectAR extends MapActivity implements OnClickListener,
     public float[] getIncMatrix() {
         return incMatrix;
     }
-
     public State getCurrentState() {
         return this.currentState;
     }
@@ -456,6 +457,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
                                             int positiveButton, int negativeButton,
                                             DialogInterface.OnClickListener listenerPositiveButton,
                                             DialogInterface.OnClickListener listenerNegativeButton) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(ProjectAR.getInstance());
         builder.setTitle(title);
         builder.setMessage(msg);
@@ -500,6 +502,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
     public void createCustomDialog(String title, View view,
                                    DialogInterface.OnClickListener listenerPositiveButton,
                                    String button, DialogInterface.OnKeyListener keyListener) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(ProjectAR.getInstance());
         builder.setTitle(title);
         builder.setView(view);
@@ -536,7 +539,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
                 Intent installIntent = new Intent();
                 installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
                 Toast.makeText(ProjectAR.getInstance().getApplicationContext(), "Instalando bibliotecas",
-                        Toast.LENGTH_SHORT).show();
+                                                                              Toast.LENGTH_SHORT).show();
                 ProjectAR.getInstance().startActivity(installIntent);
 
             }
@@ -584,16 +587,18 @@ public class ProjectAR extends MapActivity implements OnClickListener,
             @Override
             public void handleMessage(Message msg) {
                 if (msg.arg1 == 1) {
-                    if (ProjectAR.getInstance().getCurrentState().id == RouteManagerState.STATE_ID) {
+                    if (ProjectAR.getInstance().getCurrentState().id == RouteManagerState.STATE_ID)
+                    {
                         RouteManagerState state = (RouteManagerState) ProjectAR
-                                .getInstance().getCurrentState();
+                                              .getInstance().getCurrentState();
                         state.AllAvailableRoutes();
                     }
-                } else if (msg.arg1 == 2) {
+                }
+                else if (msg.arg1 == 2)
+                {
                     Toast.makeText(
                                     ProjectAR.getInstance().getApplicationContext(),
-                                    "Ruta descargada con éxito", Toast.LENGTH_LONG)
-                            .show();
+                                    "Ruta descargada con éxito", Toast.LENGTH_LONG).show();
                     ProjectAR.getInstance().LoadRoutes();
                    ProjectAR.getInstance().changeState(MainMenuState.STATE_ID);
                 }

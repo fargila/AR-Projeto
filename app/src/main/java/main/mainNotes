@@ -1,0 +1,15 @@
+[PointOI] ------------------------------------------------------------------------------------------
+A classe 'PointOI' serve como uma estrutura de dados para representar pontos
+de interesse da nossa aplicação, armazenando informações como coordenadas geográficas,
+descrições, imagens e informações relacionadas à realidade aumentada. É nela que iremos
+passar os pontos principais como o EVA, Complexo de TI e Auditório Central do Unipê.
+
+[Route] --------------------------------------------------------------------------------------------
+Essa classe serve para representar os dados de uma das rota no meu aplicativo, contendo
+informações como nome, descrição e uma lista de pontos de interesse que compõem a rota. Ela é usada
+para armazenar e alterar informações sobre diferentes rotas no meu aplicativo.
+
+[MinRouteInfo] -------------------------------------------------------------------------------------
+Classe contendo as informações da minha rota (provavelmente não iremos usar isso, mas só para
+contextualizar).
+

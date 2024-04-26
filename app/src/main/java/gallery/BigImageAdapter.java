@@ -30,10 +30,8 @@ public class BigImageAdapter extends BaseAdapter {
 
     public BigImageAdapter(Context c) {
         mContext = c;
-        TypedArray a = ProjectAR.getInstance().obtainStyledAttributes(
-                R.styleable.HelloGallery);
-        mGalleryItemBackground = a.getResourceId(
-                R.styleable.HelloGallery_android_galleryItemBackground, 0);
+        TypedArray a = ProjectAR.getInstance().obtainStyledAttributes(R.styleable.HelloGallery);
+        mGalleryItemBackground = a.getResourceId(R.styleable.HelloGallery_android_galleryItemBackground, 0);
         a.recycle();
     }
 
@@ -79,8 +77,7 @@ public class BigImageAdapter extends BaseAdapter {
             i.setImageBitmap(bmp);
 
         } else {
-            i.setImageDrawable(ProjectAR.getInstance().getResources()
-                    .getDrawable(R.drawable.loading));
+            i.setImageDrawable(ProjectAR.getInstance().getResources().getDrawable(R.drawable.loading));
         }
 
         Display display = ((WindowManager) mContext
