@@ -11,7 +11,7 @@ public class UvBufferList
     public static final int PROPERTIES_PER_ELEMENT = 2;
     public static final int BYTES_PER_PROPERTY = 4;
 
-    private FloatBuffer _b;
+    private final FloatBuffer _b;
     private int _numElements = 0;
 
     public UvBufferList(FloatBuffer $b, int $size)

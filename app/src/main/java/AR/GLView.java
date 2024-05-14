@@ -1,6 +1,7 @@
 package AR;
 
 import java.io.File;
+import java.util.Objects;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
@@ -53,7 +54,7 @@ public class GLView extends GLSurfaceView implements ISceneController, Camera.Pr
         //
         Shared.context(context);
         scene = new Scene(this);
-        ProjectAR.android.ar.core.Renderer r = new ProjectAR().android.ar.core.Renderer(scene);
+        AR.core.Renderer r = new AR.core.Renderer(scene);
         Shared.renderer(r);
 
         _glSurfaceView = this;
@@ -86,7 +87,7 @@ public class GLView extends GLSurfaceView implements ISceneController, Camera.Pr
         scene.camera().position.x = 0;
         scene.camera().position.y = 0;
         scene.camera().position.z = 0;
-        Log.d("FRAGUEL", "End AR load");
+        Log.d("ProjectAR", "End AR load");
     }
 
     /**
@@ -103,22 +104,23 @@ public class GLView extends GLSurfaceView implements ISceneController, Camera.Pr
     public void onInitScene() {
         ARState arState= (ARState)ProjectAR.getInstance().getCurrentState();
         LatLon2UTM ll = new LatLon2UTM();
-        ll.setVariables(arState.getPointOI().arCoords[0], arState.getPointOI().arCoords[1]);
+        ll.setVar(arState.getPointOI().arCoords[0], arState.getPointOI().arCoords[1]);
         float x = -(float) ll.getEasting();
         float y = 0;//arState.getPointOI().arCoords[2];
         float z = -(float) ll.getNorthing(arState.getPointOI().arCoords[0]);
         if (arState.getPointOI().urlfilesAr!=null){
             Toast.makeText(ProjectAR.getInstance().getApplicationContext(), "Carregando a Realidade Aumentada...", Toast.LENGTH_LONG).show();
 
-            for (String s: arState.getPointOI().urlfilesAr){
+            for (String s: arState.getPointOI().urlfilesAr)
+            {
                 File f = new File(ResourceManager.getInstance().getRootPath()+"/ar/"+s);
-                if (!s.equals("") && f.exists()){
+                if (!s.equals("") && f.exists())
                     scene.loadObject(s,x,y,z);
-                }
+
             }
         }
         Toast.makeText(ProjectAR.getInstance().getApplicationContext(), "Sistema carregado", Toast.LENGTH_LONG).show();
-        if (arState.getPointOI().textAr!=null && arState.getPointOI().textAr!="")
+        if (arState.getPointOI().textAr!=null && !Objects.equals(arState.getPointOI().textAr, ""))
             ProjectAR.getInstance().talk(arState.getPointOI().textAr);
 
     }

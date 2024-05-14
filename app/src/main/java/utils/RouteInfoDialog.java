@@ -40,12 +40,14 @@ public class RouteInfoDialog extends Dialog {
                 + "route" + Integer.toString(r.id) + "icon" + ".png";
 
         File f = new File(path);
-        if (f.exists()) {
+        if (f.exists())
+        {
             Bitmap bmp = BitmapFactory.decodeFile(path);
             image.setImageBitmap(bmp);
-        } else {
-            image.setImageDrawable(ProjectAR.getInstance().getResources()
-                    .getDrawable(R.drawable.loading));
+        }
+        else
+        {
+            image.setImageDrawable(ProjectAR.getInstance().getResources().getDrawable(R.drawable.loading));
             String[] url = { r.icon };
             ImageDownloadingThread imageThread = new ImageDownloadingThread(
                     url, "route" + Integer.toString(r.id) + "icon",
@@ -58,8 +60,7 @@ public class RouteInfoDialog extends Dialog {
 
         container.addView(image);
 
-        ScrollView sv = new ScrollView(ProjectAR.getInstance()
-                .getApplicationContext());
+        ScrollView sv = new ScrollView(ProjectAR.getInstance().getApplicationContext());
         sv.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 150));
         sv.setPadding(5, 5, 5, 5);
 

@@ -13,7 +13,7 @@ public class Number3dManaged extends AbstractDirtyManaged
     private float _y;
     private float _z;
 
-    private FloatBuffer _fb;
+    private final FloatBuffer _fb;
 
     public Number3dManaged(IDirtyParent $parent)
     {

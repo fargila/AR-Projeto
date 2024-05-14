@@ -4,6 +4,7 @@ import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Taken from http://www.peterfranza.com/2008/09/26/little-endian-input-stream/
@@ -37,7 +38,7 @@ public class LittleEndianDataInputStream extends InputStream implements
         byte[] b = new byte[length];
         d.readFully(b);
 
-        return new String(b, "US-ASCII");
+        return new String(b, StandardCharsets.US_ASCII);
     }
 
     /**
@@ -84,15 +85,15 @@ public class LittleEndianDataInputStream extends InputStream implements
         return Double.longBitsToDouble(readLong());
     }
 
-    public final int read(byte b[], int off, int len) throws IOException {
+    public final int read(byte[] b, int off, int len) throws IOException {
         return in.read(b, off, len);
     }
 
-    public final void readFully(byte b[]) throws IOException {
+    public final void readFully(byte[] b) throws IOException {
         d.readFully(b, 0, b.length);
     }
 
-    public final void readFully(byte b[], int off, int len) throws IOException {
+    public final void readFully(byte[] b, int off, int len) throws IOException {
         d.readFully(b, off, len);
     }
 
@@ -129,9 +130,9 @@ public class LittleEndianDataInputStream extends InputStream implements
         d.close();
     }
 
-    private DataInputStream d; // to get at high level readFully methods of
+    private final DataInputStream d; // to get at high level readFully methods of
     // DataInputStream
-    private InputStream in; // to get at the low-level read methods of
+    private final InputStream in; // to get at the low-level read methods of
     // InputStream
-    private byte w[]; // work array for buffering input
+    private final byte[] w; // work array for buffering input
 }

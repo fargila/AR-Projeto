@@ -24,21 +24,15 @@ import android.widget.LinearLayout;
 public class NumberPicker extends LinearLayout {
 
     private final long REPEAT_DELAY = 50;
-
     private final int ELEMENT_HEIGHT = 50;
     private final int ELEMENT_WIDTH = ELEMENT_HEIGHT; // you're all squares, yo
-
     private final int MINIMUM = 0;
     private final int MAXIMUM = 9;
-
     public Integer value;
-
     Button decrement;
     Button increment;
     public EditText valueText;
-
     private final Handler repeatUpdateHandler = new Handler();
-
     private boolean autoIncrement = false;
     private boolean autoDecrement = false;
 
@@ -69,7 +63,7 @@ public class NumberPicker extends LinearLayout {
         super(context, attributeSet);
 
         this.setLayoutParams( new LinearLayout.LayoutParams( LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT ) );
-        LayoutParams elementParams = new LinearLayout.LayoutParams( ELEMENT_HEIGHT, ELEMENT_WIDTH );
+        LayoutParams elementParams = new LinearLayout.LayoutParams( ELEMENT_WIDTH,  ELEMENT_HEIGHT);
 
         // init the individual elements
         initDecrementButton( context );

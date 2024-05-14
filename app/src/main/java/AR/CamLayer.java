@@ -92,13 +92,13 @@ public class CamLayer extends SurfaceView implements SurfaceHolder.Callback,
         }
     }
 
-    public void surfaceChanged(SurfaceHolder holder, int format, int width,
-                               int height) {
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         Log.i("CamLayer", "surfaceChanged");
 
         synchronized (this) {
             paused = false;
 
+            []
             mCamera = Camera.open();
 
             Camera.Parameters p = mCamera.getParameters();
@@ -143,7 +143,7 @@ public class CamLayer extends SurfaceView implements SurfaceHolder.Callback,
             mCamera.startPreview();
         }
     }
-
     Date start;
     int fcount = 0;
     int frameId = 0;
+}

@@ -2,3 +2,4 @@
 plugins {
     id("com.android.application") version "8.2.2" apply false
 }
+val playServicesMapsVersion by extra("20.0.0")

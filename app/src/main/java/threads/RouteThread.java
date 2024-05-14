@@ -17,7 +17,6 @@ import android.os.Message;
 import android.util.Log;
 
 //import com.google.android.maps.GeoPoint;
-
 import main.ProjectAR;
 import main.PointOI;
 import states.MapState;

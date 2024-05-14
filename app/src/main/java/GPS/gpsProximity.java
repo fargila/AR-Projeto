@@ -3,8 +3,8 @@ package GPS;
 import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Vibrator;
-
 import main.PointOI;
+
 import com.example.arproject.R;
 
 import main.ProjectAR;
@@ -31,7 +31,7 @@ public class gpsProximity {
         v = (Vibrator) ProjectAR.getInstance().
                 getSystemService(ProjectAR.getInstace().getApplicationContext().VIBRATOR_SERVICE);
 
-        soundClip = MediaPlayer.create(ProjectAR.getInstace().getApplicationContext(), R.raw.notification_sound);
+        //soundClip = MediaPlayer.create(ProjectAR.getInstace().getApplicationContext(), R.raw.notification_sound);
 
         pointsVisited = new ArrayList<PointOI>();
         lastFix = 0;

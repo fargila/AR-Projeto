@@ -21,6 +21,7 @@ import android.widget.TextView;
 //import com.google.android.maps.ItemizedOverlay;
 //import com.google.android.maps.MapView;
 //import com.google.android.maps.OverlayItem;
+import com.google.android.gms.maps.*;
 
 import main.*;
 import resources.ResourceManager;

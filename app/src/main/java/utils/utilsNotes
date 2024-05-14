@@ -1,0 +1,245 @@
+[utils] --------------------------------------------------------------------------------------------
+    O pacote 'utils' contém uma variedade de classes utilitárias projetadas para fornecer
+funcionalidades comuns e reutilizáveis em um aplicativo Android. Aqui está um resumo geral do
+que cada elemento do pacote 'utils' faz:
+    Essas classes são projetadas para simplificar o desenvolvimento de aplicativos Android,
+fornecendo funcionalidades comuns e reutilizáveis, como a exibição de texto formatado,
+formulários de entrada de dados, seleção de números e exibição de informações detalhadas.
+
+    -> AutomaticScrollTextView: Uma classe que estende AppCompatTextView e configura automaticamente
+    a rolagem horizontal do texto, útil para exibir texto que não cabe totalmente na tela.
+
+    -> InfoText: Uma classe que estende AppCompatTextView e configura o estilo de texto para exibir
+    informações em um formato específico.
+
+    -> NewRouteForm: Uma classe que estende LinearLayout e fornece um formulário para criar uma nova
+    rota, com campos para nomear a rota e especificar o número de pontos de interesse.
+
+    -> NewRouteGeoTaggingForm: Uma classe que estende LinearLayout e fornece um formulário para
+    criar uma nova rota com recursos de geolocalização, com um campo para nomear a rota.
+
+    -> NumberPicker: Uma classe que estende LinearLayout e fornece um componente para selecionar
+    números, com botões para incrementar e decrementar o valor, além de suportar a seleção contínua
+    quando os botões são mantidos pressionados.
+
+    -> PointExtraInfoGeoTagging: Uma classe que estende LinearLayout e fornece um formulário para
+    capturar informações extras sobre um ponto geolocalizado, com um campo para inserir o nome do
+    ponto.
+
+    -> RouteInfoDialog: Uma classe que estende Dialog e exibe informações sobre uma rota, incluindo
+    uma imagem representativa e uma descrição textual.
+
+    -> SavePointTemplate: Uma classe que estende LinearLayout e fornece um modelo para exibir as
+    coordenadas GPS de um ponto salvo, com campos para latitude e longitude.
+
+    -> TitleTextView: Uma classe que estende AutomaticScrollTextView e é projetada para exibir
+    títulos em um aplicativo Android, com configurações específicas de estilo e layout.
+
+
+
+
+
+AutomaticScrollTextView.java -----------------------------------------------------------------------
+    Ela estende a classe AppCompatTextView e é utilizada para criar um texto que rola
+automaticamente horizontalmente quando o texto é muito longo para caber na tela. Em resumo:
+
+-> Configura o texto para ter apenas uma linha.
+-> Ativa o recurso de rolagem horizontal.
+-> Define a propriedade de truncamento do texto para MARQUEE, o que significa que o texto vai se
+  mover automaticamente para a esquerda quando não couber completamente na tela.
+-> Define o limite de repetição da animação de rolagem para infinito.
+-> Torna o texto focável e selecionável, permitindo que o usuário interaja com ele.
+
+
+
+InfoText.java --------------------------------------------------------------------------------------
+    É utilizada para exibir informações de texto formatadas de forma específica.
+Aqui está um resumo do que a classe faz:
+
+-> Define o estilo de texto usando o método setTextAppearance, que recebe como argumento o contexto
+   do aplicativo e um estilo definido no arquivo de recursos de estilos (R.style.ScrollText).
+-> ScrollText é um estilo que provavelmente foi definido para aplicar formatação específica, como
+   tamanho de fonte, cor e espaçamento de texto, para um texto que será exibido em algum lugar do
+   aplicativo.
+
+
+
+NewRouteForm.java ----------------------------------------------------------------------------------
+    Essa classe encapsula a lógica de criação e obtenção de informações do formulário, facilitando a
+interação com o usuário para configurar uma nova rota no aplicativo.
+
+-> Cria um layout linear vertical para conter os elementos do formulário.
+-> Inclui campos para inserir o nome do arquivo, o nome da rota e o número de pontos de interesse
+   (POIs) da rota.
+-> O número de POIs é selecionado usando dois NumberPickers (um para dezenas e outro para unidades),
+   que permitem ao usuário selecionar um número entre 0 e 99.
+-> Os campos do formulário são compostos por TextViews e EditTexts para exibir rótulos e aceitar
+   entrada de texto.
+-> Retorna os valores inseridos pelo usuário quando os métodos getFileName(), getRouteName(),
+   getDecenas(), getUnidades() e getNumPoints() são chamados.
+
+
+
+NewRouteGeoTaggingForm.java ------------------------------------------------------------------------
+    Essa classe encapsula a lógica de criação e obtenção do nome da rota, facilitando a interação
+com ousuário durante o processo de geolocalização e marcação de uma nova rota no aplicativo.
+    Essencialmente, NewRouteGeoTaggingForm é uma versão simplificada e especializada do formulário,
+destinada a um contexto específico de geolocalização, enquanto NewRouteForm é mais abrangente,
+atendendo a uma gama mais ampla de informações necessárias para configurar uma nova rota
+
+-> Cria um layout linear vertical para conter os elementos do formulário.
+-> Inclui um campo para inserir o nome da rota.
+-> O campo do formulário é composto por um TextView para exibir um rótulo e um EditText para
+   aceitar a entrada de texto.
+-> Retorna o valor inserido pelo usuário quando o método getRouteName() é chamado.
+
+
+
+NumberPicker.java ----------------------------------------------------------------------------------
+    Essa classe chamada NumberPicker é um componente personalizado para Android que fornece uma
+área detexto numérica com dois botões para incrementar ou decrementar o valor na área de texto.
+    Em resumo, essa classe NumberPicker fornece uma maneira fácil e conveniente de selecionar
+valores numéricos em um aplicativo Android, com a capacidade de incrementar ou decrementar o valor
+de forma manual ou automática.
+
+    1) Funcionalidade de Incremento e Decremento:
+       -> A classe permite que o usuário aumente ou diminua o valor na área de texto, tanto clicando
+       nos botões correspondentes quanto mantendo pressionado o botão para uma alteração contínua.
+
+    2) Interface do Usuário:
+        -> Inclui dois botões, um para incremento (+) e outro para decremento (-), e uma área de
+        texto para exibir e editar o valor numérico.
+        -> A área de texto é configurada para aceitar apenas entrada numérica.
+
+    3) Controle de Eventos:
+        -> Quando o usuário clica em um dos botões, o valor na área de texto é incrementado ou
+        decrementado em uma unidade.
+        -> Se o usuário mantiver pressionado um dos botões, o valor na área de texto será
+        automaticamente incrementado ou decrementado em um intervalo regular.
+
+    4) Validação de Entrada:
+        -> A classe valida a entrada do usuário para garantir que apenas valores numéricos sejam
+        aceitos.
+        -> Se a entrada do usuário não puder ser convertida em um número válido, o valor na área
+        de texto permanecerá inalterado.
+
+
+
+PointExtraInfoGeoTagging.java ----------------------------------------------------------------------
+    Essa classe chamada PointExtraInfoGeoTagging é uma implementação específica de um formulário
+para capturar informações extras sobre um ponto geolocalizado.
+    Em resumo, essa classe encapsula a lógica para capturar o nome de um ponto geolocalizado em um
+formulário simples e fornece métodos para obter essas informações quando necessário.
+
+    1) Layout e Estrutura:
+        -> O layout é configurado como um LinearLayout vertical para organizar os elementos
+        verticalmente.
+        -> Inclui um TextView para exibir um rótulo e um EditText para aceitar o nome do ponto
+        capturado.
+
+    2) Inicialização e Configuração:
+        -> O construtor da classe configura o layout, define o rótulo do ponto capturado e define um
+        valor padrão para o nome do ponto.
+
+    3) Obtenção de Informações:
+        -> Um método público getPointName() é fornecido para recuperar o nome inserido pelo usuário
+        no campo de texto.
+
+    4) Uso de Contexto e Estado do Aplicativo:
+        -> A classe utiliza o contexto do aplicativo Android para criar elementos de interface do
+        usuário.
+        -> Também acessa o estado atual do aplicativo, representado por MainMenuState, para
+        determinar o número atual de pontos geolocalizados e incrementar o número do nome do ponto
+        automaticamente.
+
+
+
+RouteInfoDialog.java -------------------------------------------------------------------------------
+    A classe RouteInfoDialog é uma subclasse de Dialog utilizada para exibir informações sobre uma
+rota em um aplicativo Android.
+    Em resumo, a classe RouteInfoDialog fornece uma maneira de exibir informações sobre uma rota,
+incluindo uma imagem representativa e uma descrição textual, em um diálogo modal de um app Android.
+
+    1) Inicialização e Configuração:
+        -> O construtor recebe o contexto da aplicação, uma instância da rota (Route) e um
+        sinalizador booleano talk.
+        -> Configura o título do diálogo como o nome da rota.
+        -> Cria um layout linear vertical (LinearLayout) para organizar os elementos dentro do
+        diálogo.
+
+    2) Exibição de Imagem:
+        -> Exibe uma imagem representativa da rota, carregada localmente ou, se não existir, exibe
+        uma imagem de carregamento.
+        -> Utiliza um caminho para verificar se a imagem já foi baixada localmente. Se existir,
+        exibe a imagem; caso contrário, inicia uma thread para baixar a imagem da web e a armazenar
+        localmente.
+
+    3) Exibição de Descrição da Rota:
+        -> Utiliza um componente ScrollView para permitir a rolagem do texto, caso ele seja muito
+        longo.
+        -> Exibe a descrição da rota em um componente TextView.
+
+    4) Interação de Fala:
+        -> Se o sinalizador talk for verdadeiro e o aplicativo não estiver atualmente falando, fala
+        a descrição da rota.
+
+    5) Atualização de Imagem:
+        -> O método imageLoaded() é chamado quando a imagem é carregada. Ele atualiza a exibição da
+        imagem no diálogo.
+
+
+
+SavePointTemplate.java -----------------------------------------------------------------------------
+    A classe SavePointTemplate é um componente de interface de usuário personalizado, projetado para
+exibir as coordenadas GPS de um ponto salvo.
+    Em resumo, SavePointTemplate é um componente reutilizável que fornece uma maneira conveniente de
+exibir e interagir com as coordenadas GPS de um ponto salvo em um aplicativo Android.
+
+    1) Layout e Estrutura:
+        -> A classe estende LinearLayout e organiza os elementos verticalmente.
+        -> Inclui dois pares de TextView, um para latitude e outro para longitude.
+
+    2) Inicialização e Configuração:
+        -> No construtor, o layout é configurado e os componentes de texto para latitude e longitude
+        são inicializados.
+        -> Cada par de coordenadas é organizado em um layout linear horizontal dentro do layout
+        vertical principal.
+
+    3) Exibição de Coordenadas:
+        -> Os métodos setLatitude() e setLongitude() são fornecidos para atualizar as coordenadas
+        exibidas.
+        -> Os valores de latitude e longitude são exibidos nos respectivos componentes de texto.
+
+    4) Obtenção de Coordenadas:
+        -> Os métodos getLatitude() e getLongitude() são fornecidos para recuperar as coordenadas de
+        latitude e longitude como valores de ponto flutuante.
+
+    5) Personalização:
+        -> Os valores de latitude e longitude podem ser definidos e obtidos a partir desta classe.
+
+
+
+TitleTextView.java ---------------------------------------------------------------------------------
+    A classe TitleTextView é uma extensão de AutomaticScrollTextView e é projetada para exibir
+títulos.
+    Em resumo, TitleTextView é uma classe utilitária projetada para simplificar a exibição de
+títulos em um aplicativo Android, garantindo consistência visual e facilitando a personalização.
+
+    1) Extensão de AutomaticScrollTextView:
+        -> A classe estende AutomaticScrollTextView, que por sua vez é uma subclasse de
+        AppCompatTextView.
+
+    2) Inicialização e Configuração:
+        -> No construtor, o layout e a aparência do texto são configurados.
+        -> O texto é centralizado horizontalmente.
+        -> A aparência do texto é definida usando um estilo de texto StateTitle, que é fornecido
+        pelo recurso do aplicativo.
+        -> A cor de fundo é definida como preto.
+        -> A altura do texto é fixada em um valor específico (HEIGHT), garantindo que todos os
+        títulos tenham a mesma altura.
+
+    3) Personalização:
+        -> Esta classe fornece uma maneira de criar e exibir títulos consistentes em um aplicativo
+        Android.
+        -> Os desenvolvedores podem usar essa classe para exibir títulos de forma fácil e uniforme
+        em diferentes partes do aplicativo.

@@ -147,12 +147,12 @@ public class TextureManager
 
     private String arrayToString(String[] $a)
     {
-        String s = "";
+        StringBuilder s = new StringBuilder();
         for (int i = 0; i < $a.length; i++)
         {
-            s += $a[i].toString() + " | ";
+            s.append($a[i]).append(" | ");
         }
-        return s;
+        return s.toString();
     }
 
     @SuppressWarnings("unused")

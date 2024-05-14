@@ -47,6 +47,7 @@ import android.widget.Toast;
 //import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.MapActivity;
 
+
 import com.example.arproject.R;
 
 import states.*;
@@ -97,7 +98,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
     private ProgressDialog dialog;
 
 
-    @Override
+
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         menu.clear();
@@ -112,7 +113,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
 
     }
 
-    @Override
+
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
 
@@ -125,7 +126,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
     /**
      * Eventos del menu de opciones de la aplicación en función del estado
      */
-    @Override
+
     public boolean onOptionsItemSelected(MenuItem item) {
 
         // Eventos del menu de opciones del estado
@@ -148,7 +149,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
     }
 
     /** Called when the activity is first created. */
-    @Override
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -210,7 +211,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
         currentState.onClick(view);
     }
 
-    @Override
+
     public boolean onContextItemSelected(MenuItem item) {
         if (currentState.onContextItemSelected(item))
             return true;
@@ -219,7 +220,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
 
     }
 
-    @Override
+
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.clear();
@@ -228,13 +229,13 @@ public class ProjectAR extends MapActivity implements OnClickListener,
 
     }
 
-    @Override
+
     public void onContextMenuClosed(Menu menu) {
         MapState.getInstance().setContextMenuDisplayed(false);
         super.onContextMenuClosed(menu);
     }
 
-    @Override
+
     public boolean dispatchKeyEvent(KeyEvent event) {
 
         if (currentState.dispatchKeyEvent(event))
@@ -317,7 +318,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
 
     }
 
-    @Override
+
     protected boolean isRouteDisplayed() {
         return false;
     }
@@ -333,7 +334,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
 
     }
 
-    @Override
+
     protected void onDestroy() {
         tts.shutdown();
         super.onDestroy();
@@ -361,7 +362,9 @@ public class ProjectAR extends MapActivity implements OnClickListener,
         String[] ficheros = new File(path).list();
         int i = 0;
         File f;
-        while (i < ficheros.length) {
+        while (true) {
+            assert ficheros != null;
+            if (!(i < ficheros.length)) break;
             f = new File(path + "/" + ficheros[i]);
             f.delete();
             i++;
@@ -513,7 +516,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
         alert.show();
     }
 
-    @Override
+
     protected boolean isLocationDisplayed() {
         // Este método pone que es obligatorio ponerlo cuando muestras tu
         // posicion
@@ -521,14 +524,14 @@ public class ProjectAR extends MapActivity implements OnClickListener,
         return (currentState.id == MapState.STATE_ID);
     }
 
-    @Override
+
     public void onConfigurationChanged(Configuration newConfig) {
 
         currentState.onConfigurationChanged(newConfig);
         super.onConfigurationChanged(newConfig);
     }
 
-    @Override
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == MY_DATA_CHECK_CODE) 
@@ -606,7 +609,7 @@ public class ProjectAR extends MapActivity implements OnClickListener,
         };
     }
 
-    @Override
+
     public void onUtteranceCompleted(String arg0) {
         Message m = new Message();
         m.arg1 = Integer.parseInt(arg0);

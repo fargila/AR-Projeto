@@ -157,7 +157,7 @@ public class Renderer implements GLSurfaceView.Renderer
 
         // Background color
 
-        if (_scene.backgroundColor().isDirty() && _scene.backgroundTransparent() == false)
+        if (_scene.backgroundColor().isDirty() && !_scene.backgroundTransparent())
         {
             _gl.glClearColor(
                     (float)_scene.backgroundColor().r() / 255f,
@@ -180,9 +180,9 @@ public class Renderer implements GLSurfaceView.Renderer
         // GL_LIGHTS enabled/disabled based on enabledDirty list
         for (int glIndex = 0; glIndex < NUM_GLLIGHTS; glIndex++)
         {
-            if (_scene.lights().glIndexEnabledDirty()[glIndex] == true)
+            if (_scene.lights().glIndexEnabledDirty()[glIndex])
             {
-                if (_scene.lights().glIndexEnabled()[glIndex] == true)
+                if (_scene.lights().glIndexEnabled()[glIndex])
                 {
                     _gl.glEnable(GL10.GL_LIGHT0 + glIndex);
 
@@ -201,55 +201,45 @@ public class Renderer implements GLSurfaceView.Renderer
         // Lights' properties
 
         Light[] lights = _scene.lights().toArray();
-        for (int i = 0; i < lights.length; i++)
-        {
-            Light light = lights[i];
-
+        for (Light light : lights) {
             if (light.isDirty()) // .. something has changed
             {
                 // Check all of Light's properties for dirty
 
                 int glLightId = GL10.GL_LIGHT0 + _scene.lights().getGlIndexByLight(light);
 
-                if (light.position.isDirty())
-                {
+                if (light.position.isDirty()) {
                     light.commitPositionAndTypeBuffer();
                     _gl.glLightfv(glLightId, GL10.GL_POSITION, light.positionAndTypeBuffer());
                     light.position.clearDirtyFlag();
                 }
-                if (light.ambient.isDirty())
-                {
+                if (light.ambient.isDirty()) {
                     light.ambient.commitToFloatBuffer();
                     _gl.glLightfv(glLightId, GL10.GL_AMBIENT, light.ambient.floatBuffer());
                     light.ambient.clearDirtyFlag();
                 }
-                if (light.diffuse.isDirty())
-                {
+                if (light.diffuse.isDirty()) {
                     light.diffuse.commitToFloatBuffer();
                     _gl.glLightfv(glLightId, GL10.GL_DIFFUSE, light.diffuse.floatBuffer());
                     light.diffuse.clearDirtyFlag();
                 }
-                if (light.specular.isDirty())
-                {
+                if (light.specular.isDirty()) {
                     light.specular.commitToFloatBuffer();
                     _gl.glLightfv(glLightId, GL10.GL_SPECULAR, light.specular.floatBuffer());
                     light.specular.clearDirtyFlag();
                 }
-                if (light.emissive.isDirty())
-                {
+                if (light.emissive.isDirty()) {
                     light.emissive.commitToFloatBuffer();
                     _gl.glLightfv(glLightId, GL10.GL_EMISSION, light.emissive.floatBuffer());
                     light.emissive.clearDirtyFlag();
                 }
-                if(light.type() == LightType.DIRECTIONAL && light.direction.isDirty())
-                {
+                if (light.type() == LightType.DIRECTIONAL && light.direction.isDirty()) {
                     light.direction.commitToFloatBuffer();
                     _gl.glLightfv(glLightId, GL10.GL_SPOT_DIRECTION, light.direction.floatBuffer());
                     _gl.glLightf(glLightId, GL10.GL_SPOT_CUTOFF, 45f);
                     light.direction.clearDirtyFlag();
                 }
-                if (light.isVisibleBm().isDirty())
-                {
+                if (light.isVisibleBm().isDirty()) {
                     if (light.isVisible()) {
                         _gl.glEnable(glLightId);
                     } else {
@@ -258,8 +248,7 @@ public class Renderer implements GLSurfaceView.Renderer
                     light.isVisibleBm().clearDirtyFlag();
                 }
 
-                if (light.attenuation().isDirty())
-                {
+                if (light.attenuation().isDirty()) {
                     _gl.glLightf(glLightId, GL10.GL_CONSTANT_ATTENUATION, light.attenuation().getX());
                     _gl.glLightf(glLightId, GL10.GL_LINEAR_ATTENUATION, light.attenuation().getY());
                     _gl.glLightf(glLightId, GL10.GL_QUADRATIC_ATTENUATION, light.attenuation().getZ());
@@ -272,7 +261,7 @@ public class Renderer implements GLSurfaceView.Renderer
 
     protected void drawScene()
     {
-        if(_scene.fogEnabled() == true) {
+        if(_scene.fogEnabled()) {
             _gl.glFogf(GL10.GL_FOG_MODE, _scene.fogType().glValue());
             _gl.glFogf(GL10.GL_FOG_START, _scene.fogNear());
             _gl.glFogf(GL10.GL_FOG_END, _scene.fogFar());
@@ -299,7 +288,7 @@ public class Renderer implements GLSurfaceView.Renderer
 
     protected void drawObject(Object3d $o)
     {
-        if ($o.isVisible() == false) return;
+        if (!$o.isVisible()) return;
 
         // Various per-object settings:
 
@@ -388,7 +377,7 @@ public class Renderer implements GLSurfaceView.Renderer
 
         if ($o.renderType() == RenderType.LINES || $o.renderType() == RenderType.LINE_STRIP || $o.renderType() == RenderType.LINE_LOOP)
         {
-            if ( $o.lineSmoothing() == true) {
+            if ($o.lineSmoothing()) {
                 _gl.glEnable(GL10.GL_LINE_SMOOTH);
             }
             else {
@@ -628,7 +617,7 @@ public class Renderer implements GLSurfaceView.Renderer
             _fps = _frameCount / (delta/1000f);
 
             _activityManager.getMemoryInfo(_memoryInfo);
-            Log.v(Min3d.TAG, "FPS: " + Math.round(_fps) + ", availMem: " + Math.round(_memoryInfo.availMem/1048576) + "MB");
+            Log.v(Min3d.TAG, "FPS: " + Math.round(_fps) + ", availMem: " + Math.round((float) _memoryInfo.availMem /1048576) + "MB");
 
             _timeLastSample = now;
             _frameCount = 0;

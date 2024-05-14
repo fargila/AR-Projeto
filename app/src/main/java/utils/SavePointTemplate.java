@@ -57,16 +57,13 @@ public class SavePointTemplate extends LinearLayout {
     public void setLatitude(float latitude) {
         latitudeGPS.setText(Float.toString(latitude));
     }
-
     @SuppressLint("SetTextI18n")
     public void setLongitude(float longitude) {
         longitudeGPS.setText(Float.toString(longitude));
     }
-
     public float getLatitude() {
         return Float.parseFloat(latitudeGPS.getText().toString());
     }
-
     public float getLontitude() {
         return Float.parseFloat(longitudeGPS.getText().toString());
     }

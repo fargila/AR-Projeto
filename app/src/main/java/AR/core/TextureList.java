@@ -16,7 +16,7 @@ import AR.vos.TextureVo;
  */
 public class TextureList
 {
-    private ArrayList<TextureVo> _t;
+    private final ArrayList<TextureVo> _t;
 
 
     public TextureList()

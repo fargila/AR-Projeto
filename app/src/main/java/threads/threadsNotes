@@ -1,0 +1,153 @@
+[threads] ------------------------------------------------------------------------------------------
+    O package 'threads' contém as classes responsáveis por executar as tarefas em segundo plano
+(background) de forma assíncrona. Aqui está um resumo das classes e seu uso:
+    Essas classes são úteis em aplicativos Android que precisam baixar arquivos ou imagens da
+internet, bem como calcular rotas entre pontos geográficos. Ao executar essas tarefas em threads
+separadas, elas não bloqueiam a interface do usuário, garantindo uma experiência de usuário mais
+suave e responsiva.
+
+    1) FileDownloadingThread:
+        -> Esta classe é responsável por baixar arquivos da internet para o dispositivo. Ela aceita
+        uma lista de URLs de arquivos a serem baixados e os nomes de arquivo correspondentes.
+        -> Após o download de cada arquivo, envia uma mensagem para indicar o progresso ou a
+        conclusão do download.
+
+    2) ImageDownloadingThread:
+        -> Similar à FileDownloadingThread, mas projetada especificamente para baixar imagens da
+        internet.
+        -> Aceita URLs de imagens e nomes de arquivos de destino.
+        -> Após o download de cada imagem, envia uma mensagem para indicar o progresso ou a
+        conclusão do download.
+
+    3) RouteThread:
+        -> Esta classe é responsável por obter rotas entre pontos geográficos usando o serviço de
+        mapas do Google.
+        -> Aceita listas de pontos geográficos visitados e não visitados como entrada.
+        -> Usa a API de mapas do Google para obter a rota entre cada par de pontos.
+        _> Após a obtenção de todas as rotas, envia uma mensagem para indicar o término do processo.
+
+
+
+
+
+FileDownloadingThread.java -------------------------------------------------------------------------
+    A classe FileDownloadingThread é responsável por baixar arquivos da internet e salvá-los
+localmente no dispositivo.
+    Ela é útil para baixar arquivos da internet de forma assíncrona, permitindo que a interface do
+usuário permaneça responsiva durante o processo de download.
+
+    1) Construtor:
+        -> Recebe um array de URLs dos arquivos a serem baixados, um array de nomes para os arquivos
+         e o caminho onde os arquivos serão salvos.
+
+    2) Método run():
+        -> Itera sobre as URLs e os nomes dos arquivos.
+        -> Verifica se o arquivo já existe localmente.
+        -> Se o arquivo não existe, ele é baixado da URL especificada e salvo localmente.
+        -> Durante o download, atualiza o progresso do download.
+        -> Após o download, envia uma mensagem para o Handler informando o término do download.
+        -> Se o arquivo já existe localmente, envia uma mensagem para o Handler informando o término
+        do download.
+
+    3) Variáveis de Classe:
+        -> urls: Array de URLs dos arquivos a serem baixados.
+        -> names: Array de nomes para os arquivos.
+        -> aURL: URL atual sendo processada.
+        -> f: Arquivo atual sendo manipulado.
+        -> savedData: Caminho onde os arquivos serão salvos.
+
+    4) Geração de Mensagens:
+        -> As mensagens são usadas para informar sobre o progresso do download aos componentes da
+        interface do usuário.
+
+    5) Tratamento de Exceções:
+        -> Lida com exceções que podem ocorrer durante o download, como falha na conexão ou
+        problemas de E/S.
+        -> Exclui o arquivo se ocorrer um erro durante o download.
+
+
+
+ImageDownloadingThreads.java -----------------------------------------------------------------------
+    A classe ImageDownloadingThread é responsável por baixar imagens da internet e salvá-las
+localmente no dispositivo.
+    Essa classe é útil para baixar imagens da internet de forma assíncrona, permitindo que a
+interface do usuário permaneça responsiva durante o processo de download.
+
+    1) Construtores:
+        -> Existem vários construtores, dependendo do número de imagens a serem baixadas e se o
+        salvamento é sequencial ou não.
+
+    2) Método run():
+        -> Itera sobre as URLs das imagens.
+        -> Verifica se a imagem já existe localmente.
+        -> Se a imagem não existe, ela é baixada da URL especificada e salva localmente.
+        -> Após o download, envia uma mensagem para o Handler informando o término do download.
+        -> Se a imagem já existe localmente, envia uma mensagem para o Handler informando o término
+         do download.
+
+    3) Método getImageBitmap():
+        -> Obtém um Bitmap da URL fornecida.
+        -> Abre uma conexão HTTP, obtém o InputStream, converte-o em Bitmap usando BitmapFactory.
+
+    4) Variáveis de Classe:
+        -> urls: Array de URLs das imagens a serem baixadas.
+        -> names: Array de nomes para as imagens.
+        -> name: Nome da imagem, usado quando apenas uma imagem é baixada.
+        -> index: Índice da imagem atual sendo processada.
+        -> aURL: URL atual sendo processada.
+        -> conn: Conexão HTTP para baixar a imagem.
+        -> is: InputStream da conexão HTTP.
+        -> bis: BufferedInputStream para ler o InputStream.
+        -> bm: Bitmap da imagem baixada.
+        -> tmp: Bitmap temporário usado durante o processo de download.
+        -> f: Arquivo atual sendo manipulado.
+        -> savedData: Caminho onde as imagens serão salvas.
+        -> sequencial: Indica se o salvamento das imagens é sequencial ou não.
+
+    5) Geração de Mensagens:
+        -> As mensagens são usadas para informar sobre o término do download da imagem aos
+        componentes da interface do usuário.
+
+    6) Tratamento de Exceções:
+        -> Lida com exceções que podem ocorrer durante o download da imagem, como falha na conexão
+        ou problemas de E/S.
+        -> Exclui o arquivo se ocorrer um erro durante o download.
+
+
+
+RouteThread.java -----------------------------------------------------------------------------------
+    A classe RouteThread é responsável por obter rotas entre pontos geográficos usando o serviço de
+    mapas do Google.
+    Essa classe é útil para obter rotas entre pontos geográficos em um aplicativo Android que
+    utiliza o serviço de mapas do Google, permitindo a navegação eficiente entre esses pontos.
+
+    1) Construtor:
+        -> Recebe duas listas de pontos geográficos (coordenadas) como parâmetros: uma lista para os
+        pontos visitados e outra lista para os pontos não visitados.
+
+    Método run():
+        -> Itera sobre os pontos visitados e não visitados.
+        -> Para cada ponto, tenta obter a rota do ponto atual para o próximo ponto usando o
+        método GetPath.
+        -> Se a rota for obtida com sucesso, adiciona a rota à lista de rotas verde ou vermelha,
+        dependendo se o ponto é visitado ou não visitado.
+        -> Após o processamento de todos os pontos, envia uma mensagem para o Handler indicando o
+        término da obtenção das rotas.
+
+    Método GetPath():
+        -> Constrói uma URL para a solicitação ao serviço de mapas do Google para obter a rota entre
+        dois pontos geográficos.
+        -> Conecta-se ao serviço de mapas e obtém o documento KML (XML) que contém a rota.
+        -> Analisa o documento KML para extrair as coordenadas da rota.
+        -> Se a rota for obtida com sucesso, retorna true; caso contrário, retorna false.
+
+    Variáveis de Classe:
+        -> rutasVerde, rutasRojo: Listas de rotas verde e vermelha, respectivamente.
+        -> visited, notVisited: Listas de pontos visitados e não visitados.
+        -> rutaActual: Lista de pontos geográficos representando a rota atual.
+        -> anterior, actual: Pontos geográficos anterior e atual sendo processados.
+        -> first: Indica se é o primeiro ponto sendo processado.
+
+    Tratamento de Exceções:
+        -> Lida com exceções que podem ocorrer durante a obtenção da rota, como falha na conexão,
+        problemas de E/S ou análise do documento KML.

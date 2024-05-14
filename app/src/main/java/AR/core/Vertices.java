@@ -32,9 +32,9 @@ public class Vertices
         _hasNormals = true;
         _hasColors = true;
 
-        if (_hasUvs) _uvs = new UvBufferList($maxElements);
-        if (_hasNormals) _normals = new Number3dBufferList($maxElements);
-        if (_hasColors) _colors = new Color4BufferList($maxElements);
+        _uvs = new UvBufferList($maxElements);
+        _normals = new Number3dBufferList($maxElements);
+        _colors = new Color4BufferList($maxElements);
     }
 
     /**

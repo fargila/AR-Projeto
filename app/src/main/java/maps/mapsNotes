@@ -1,0 +1,136 @@
+[maps] ---------------------------------------------------------------------------------------------
+    Essas classes trabalham juntas para fornecer funcionalidades de mapeamento, como exibição de
+pontos de interesse, rotas e sobreposições na interface do usuário. Elas lidam com o desenho e a
+interação do mapa, fornecendo uma experiência de usuário mais rica ao trabalhar com mapas.
+
+
+
+
+MapItemizedOverlay.java ----------------------------------------------------------------------------
+    Este arquivo contém a classe MapItemizedOverlays, que é uma extensão de ItemizedOverlay para
+usar com mapas do Google.
+    Essa classe é útil para adicionar e gerenciar sobreposições de itens em um mapa do Google, bem
+como para lidar com interações do usuário com esses itens. Ela é parte integrante da aplicação que
+usa o mapa para exibir informações geográficas.
+
+    1) MapItemizedOverlays:
+        -> Esta classe é responsável por exibir sobreposições de itens no mapa do Google.
+        -> Ela trata os eventos de toque no mapa, como toques longos e toques únicos.
+        -> Quando um item é tocado, exibe um popup com informações sobre o item, como nome e imagem
+        associada.
+        -> Também gerencia a exibição do menu de contexto para iniciar ou abandonar uma rota,
+        dependendo do contexto.
+
+    2) Métodos importantes:
+        -> onTap(int index): Chamado quando um item é tocado no mapa. Exibe um popup com informações
+        sobre o item.
+        -> showPopup(PointOverlay item): Exibe o popup com informações detalhadas sobre um item.
+        -> onLongPress(MotionEvent e): Chamado quando um toque longo é detectado. Decide se deve
+        exibir o menu de contexto para iniciar ou abandonar uma rota, dependendo do contexto.
+        -> onTouchEvent(MotionEvent event, MapView mapView): Trata os eventos de toque no mapa.
+
+
+
+NextPointOverlay.java ------------------------------------------------------------------------------
+    O arquivo contém a classe NextPointOverlay, que é uma extensão de Overlay.
+    Essa classe é útil para fornecer orientação visual para o usuário sobre a próxima rota a ser
+seguida em um aplicativo Android que utiliza mapas para exibir rotas e pontos de interesse. Ela
+ajuda os usuários a navegar facilmente até o próximo ponto de interesse em uma rota.
+
+    1) NextPointOverlay:
+        -> Esta classe é responsável por desenhar uma linha no mapa do Google que indica a rota para
+         o próximo ponto de interesse.
+        -> Ela utiliza o serviço da API do Google Maps para obter a rota entre o ponto atual do
+        usuário e o próximo ponto de interesse.
+        -> A rota é desenhada como uma linha azul no mapa.
+        -> Se o caminho não puder ser obtido, uma linha direta é desenhada do ponto atual do usuário
+         para o próximo ponto de interesse.
+        -> Esta sobreposição é desenhada somente quando o modo de rota está ativo.
+
+    2) Métodos importantes:
+        -> draw(Canvas canvas, MapView mapView, boolean shadow): Desenha a linha que representa a
+        rota no mapa.
+        -> GetPath(GeoPoint src, GeoPoint dest): Obtém a rota entre dois pontos usando o serviço da
+        API do Google Maps.
+
+
+
+PointOverlay.java ----------------------------------------------------------------------------------
+    Essa classe é útil para representar pontos de interesse em um mapa e associá-los às rotas
+correspondentes. Ela permite que os desenvolvedores armazenem informações adicionais sobre os pontos
+de interesse, como a rota à qual eles pertencem, facilitando a interação e a navegação do usuário no
+mapa.
+
+    1) PointOverlay:
+        -> Esta classe representa um marcador de ponto de interesse (POI) no mapa.
+        -> Ela estende a classe OverlayItem, que é usada para representar um item de sobreposição no
+         mapa.
+        -> Um objeto PointOverlay é criado com uma localização geográfica (GeoPoint), um título e
+        uma descrição.
+        -> Além dos parâmetros padrão do OverlayItem, esta classe também armazena referências ao
+        ponto de interesse e à rota associada.
+
+    2) Métodos importantes:
+        -> getRoute(): Retorna a rota associada a este marcador.
+        -> getPointOI(): Retorna o ponto de interesse associado a este marcador.
+
+
+
+RouteOverlay.java ----------------------------------------------------------------------------------
+    Esta classe é fundamental para visualizar as rotas no mapa, seja exibindo uma rota específica ou
+calculando e exibindo rotas verde e vermelha para pontos visitados e não visitados, respectivamente.
+Isso permite que os usuários visualizem facilmente as rotas e os pontos de interesse ao navegar no
+aplicativo.
+
+    1) RouteOverlay:
+        -> Esta classe é responsável por desenhar a rota no mapa.
+        -> Ela estende a classe Overlay, que é usada para representar sobreposições no mapa.
+        -> Um objeto RouteOverlay pode ser criado com ou sem uma rota especificada.
+        -> Se uma rota for especificada, a classe desenhará essa rota no mapa.
+        -> Se uma rota não for especificada, a classe criará threads para calcular as rotas verde e
+        vermelha (indicando pontos visitados e não visitados) e, em seguida, as desenhará no mapa.
+
+    2) Métodos importantes:
+        -> draw(): Este método é chamado sempre que a sobreposição deve ser desenhada. Ele desenha a
+         rota no mapa usando as informações fornecidas pela classe Projection.
+
+
+
+TransparentOverlay.java ----------------------------------------------------------------------------
+    Esta classe é crucial para exibir as rotas verde e vermelha no mapa de forma transparente,
+permitindo que os usuários vejam facilmente essas rotas enquanto ainda podem interagir com outros
+elementos do mapa.
+
+    1) TransparentOverlay:
+        -> Esta classe é responsável por desenhar as rotas verde e vermelha de forma transparente no
+         mapa.
+        -> Ela estende a classe Overlay, que é usada para representar sobreposições no mapa.
+        -> Um objeto TransparentOverlay pode ser criado com ou sem uma rota especificada.
+        -> Se uma rota for especificada, a classe desenhará essa rota no mapa.
+        -> Se uma rota não for especificada, a classe criará threads para calcular as rotas verde e
+        vermelha (indicando pontos visitados e não visitados) e, em seguida, as desenhará no mapa.
+
+    2) Métodos importantes:
+        -> draw(): Este método é chamado sempre que a sobreposição deve ser desenhada. Ele desenha
+        as rotas verde e vermelha no mapa com cores diferentes e transparência para torná-las
+        visíveis, mas não dominantes.
+
+
+
+TransparentPanel.java ------------------------------------------------------------------------------
+    Essa classe é útil para criar painéis transparentes com bordas arredondadas, o que pode ser
+usado para diversos fins, como sobreposições em interfaces de usuário ou realce de elementos em
+layouts.
+
+    TransparentPanel:
+        -> Esta classe estende LinearLayout e é usada para criar um painel transparente com borda
+        arredondada.
+        -> Ela substitui o método dispatchDraw() para desenhar o painel transparente com bordas no
+        canvas.
+        -> O painel tem um preenchimento interno e uma borda.
+        -> O preenchimento interno é definido com uma cor semi-transparente usando o Paint com ARGB
+        (Alfa, Vermelho, Verde, Azul).
+        -> A borda é definida usando outro Paint, que é configurado para desenhar uma linha com cor
+        sólida e largura definida.
+        -> O retângulo de desenho é criado usando RectF, que representa um retângulo com coordenadas
+        de ponto flutuante.

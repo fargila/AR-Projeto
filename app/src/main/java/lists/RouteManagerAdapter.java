@@ -26,12 +26,10 @@ public class RouteManagerAdapter extends BaseAdapter {
     public int getCount() {
         return mImageIds.length;
     }
-
     @Override
     public Object getItem(int arg0) {
         return arg0;
     }
-
     @Override
     public long getItemId(int arg0) {
         return arg0;

@@ -46,7 +46,7 @@ public class FileDownloadingThread extends Thread {
 
             f = new File(absolutePath);
 
-            if (!f.exists() && url != null) {
+            if (!f.exists()) {
 
                 try {
                     aURL = new URL(url);

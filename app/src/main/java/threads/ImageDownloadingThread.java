@@ -80,8 +80,10 @@ public class ImageDownloadingThread extends Thread {
             {
                 if (sequencial)
                     absolutePath = savedData + name + i + ".png";
-                else
+                else {
+                    assert names != null;
                     absolutePath = savedData + names[i] + ".png";
+                }
             }
 
             f = new File(absolutePath);

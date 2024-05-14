@@ -1,0 +1,51 @@
+[lists] --------------------------------------------------------------------------------------------
+    Essas classes são responsáveis por adaptar os dados necessários e fornecer a exibição correta de
+imagens em um GridView, garantindo uma experiência de usuário adequada e intuitiva ao lidar com
+listas ou grades de itens na aplicação.
+
+
+
+
+
+InfoPointAdapter.java ------------------------------------------------------------------------------
+    Usado para preencher um GridView com ícones de imagem.
+    Este adaptador é usado para preencher um GridView com ícones de imagem para representar
+diferentes tipos de informações associadas aos pontos de interesse em um aplicativo.
+
+    1) Variáveis de membro:
+        -> mContext: Contexto da aplicação.
+        -> mImageIds: Um array de IDs de recursos de imagem.
+
+    2) Método construtor:
+        -> InfoPointAdapter(Context c): Inicializa o adaptador com o contexto fornecido.
+
+    3) Métodos sobrescritos:
+        -> getCount(): Retorna o número de itens no adaptador.
+        -> getItem(int position): Retorna o item na posição especificada.
+        -> getItemId(int position): Retorna o ID do item na posição especificada.
+        -> getView(int position, View convertView, ViewGroup parent): Retorna a visualização que
+        será exibida na posição especificada no GridView. Neste caso, cria e configura um ImageView
+        com a largura igual a um terço da largura da tela e uma altura fixa de 50 pixels, usando os
+        IDs de recursos de imagem do array mImageIds.
+
+RouteManagerAdapter.java ---------------------------------------------------------------------------
+Ele é usado para preencher um GridView com ícones de imagem.
+Embora ambas as classes sejam usadas para exibir imagens em um GridView, elas têm propósitos
+diferentes: uma é voltada para o gerenciamento de rotas (RouteManagerAdapter), enquanto a outra é
+voltada para pontos de informação (InfoPointAdapter).
+
+    Variáveis de membro:
+        -> mContext: Contexto da aplicação.
+        -> mImageIds: Um array de IDs de recursos de imagem.
+
+    Método construtor:
+        -> RouteManagerAdapter(Context c): Inicializa o adaptador com o contexto fornecido.
+
+    Métodos sobrescritos:
+        -> getCount(): Retorna o número de itens no adaptador.
+        -> getItem(int position): Retorna o item na posição especificada.
+        -> getItemId(int position): Retorna o ID do item na posição especificada.
+        -> getView(int position, View convertView, ViewGroup parent): Retorna a visualização que
+        será exibida na posição especificada no GridView. Neste caso, cria e configura um ImageView
+        com alargura igual a um terço da largura da tela e uma altura fixa de 50 pixels, usando os
+        IDs de recursos de imagem do array mImageIds.
